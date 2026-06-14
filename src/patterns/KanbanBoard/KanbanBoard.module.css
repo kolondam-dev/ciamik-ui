@@ -1,0 +1,90 @@
+.board {
+  display: flex;
+  gap: var(--space-md);
+  width: 100%;
+  overflow-x: auto;
+  padding: var(--space-sm) 0;
+  align-items: flex-start;
+}
+
+.column {
+  flex: 1;
+  min-width: 250px;
+  max-width: 320px;
+  background-color: var(--ciamik-navy-50);
+  border: 1px solid var(--ciamik-border-faint);
+  border-radius: var(--r-lg);
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  padding: var(--space-sm);
+  gap: var(--space-sm);
+}
+
+:global(.dark) .column {
+  background-color: var(--ciamik-navy-900);
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-xs) var(--space-sm);
+  border-bottom: 1px solid rgba(123, 130, 160, 0.15);
+}
+
+.columnTitle {
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ciamik-ink);
+  margin: 0;
+}
+
+:global(.dark) .columnTitle {
+  color: var(--ciamik-bg);
+}
+
+.cardCount {
+  font-size: 11px;
+  font-weight: 700;
+  background-color: var(--ciamik-border);
+  color: var(--ciamik-text-secondary);
+  padding: 2px 6px;
+  border-radius: var(--r-pill);
+}
+
+/* ── Cards Area ── */
+.cardsList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  overflow-y: auto;
+  flex: 1;
+  padding-bottom: var(--space-sm);
+  min-height: 150px; /* makes drop target drop area easy */
+}
+
+.draggableCardWrapper {
+  cursor: grab;
+  user-select: none;
+}
+
+.draggableCardWrapper:active {
+  cursor: grabbing;
+}
+
+.defaultCard {
+  padding: var(--space-md);
+  box-shadow: var(--sh-sm);
+  background-color: var(--ciamik-surface);
+}
+
+.cardTitle {
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ciamik-ink);
+  margin: 0;
+  line-height: 1.4;
+}

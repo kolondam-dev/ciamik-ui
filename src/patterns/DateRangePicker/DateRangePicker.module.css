@@ -1,0 +1,163 @@
+.wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 320px;
+}
+
+.triggerBtn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+  background-color: var(--ciamik-surface);
+  border: 1px solid var(--ciamik-border);
+  border-radius: var(--r-md);
+  padding: 0 var(--space-md);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ciamik-ink);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease);
+  gap: var(--space-sm);
+  outline: none;
+  text-align: left;
+}
+
+.triggerBtn:hover {
+  border-color: var(--ciamik-text-secondary);
+}
+
+.triggerBtn:focus-visible {
+  box-shadow: var(--ciamik-focus-ring);
+  border-color: var(--ciamik-primary);
+}
+
+.calIcon {
+  color: var(--ciamik-text-secondary);
+  flex-shrink: 0;
+}
+
+.label {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.caret {
+  color: var(--ciamik-text-secondary);
+  flex-shrink: 0;
+}
+
+/* ── Dropdown Panel ── */
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  background-color: var(--ciamik-surface);
+  border: 1px solid var(--ciamik-border);
+  border-radius: var(--r-md);
+  box-shadow: var(--sh-md);
+  z-index: 1010;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.presetsList {
+  display: flex;
+  flex-direction: column;
+  padding: 6px 0;
+}
+
+.presetItem {
+  background: transparent;
+  border: none;
+  width: 100%;
+  padding: 8px var(--space-md);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ciamik-text-secondary);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+}
+
+.presetItem:hover {
+  background-color: var(--ciamik-bg);
+  color: var(--ciamik-ink);
+}
+
+.activeItem {
+  background-color: rgba(var(--ciamik-primary-rgb), 0.06);
+  color: var(--ciamik-primary);
+  font-weight: 700;
+}
+
+/* ── Custom Dates Section ── */
+.customSection {
+  padding: var(--space-md);
+  border-top: 1px solid var(--ciamik-border-faint);
+  background-color: var(--ciamik-bg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inputLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ciamik-text-secondary);
+  text-transform: uppercase;
+}
+
+.dateInput {
+  height: 36px;
+  border: 1px solid var(--ciamik-border);
+  border-radius: var(--r-sm);
+  padding: 0 var(--space-sm);
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ciamik-ink);
+  background-color: var(--ciamik-surface);
+  outline: none;
+}
+
+.dateInput:focus {
+  border-color: var(--ciamik-primary);
+  box-shadow: var(--ciamik-focus-ring);
+}
+
+/* ── Compare Row ── */
+.compareRow {
+  padding: var(--space-md);
+  border-top: 1px solid var(--ciamik-border-faint);
+  background-color: var(--ciamik-surface);
+}
+
+.compareLabel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 12px;
+  color: var(--ciamik-text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.compareCheckbox {
+  cursor: pointer;
+}

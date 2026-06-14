@@ -1,0 +1,184 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border: 1px solid var(--ciamik-border);
+  border-radius: var(--r-lg);
+  background-color: var(--ciamik-surface);
+  overflow: hidden;
+  position: relative;
+}
+
+/* ── Bulk Actions Bar ── */
+.bulkActionsBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  background-color: var(--ciamik-primary);
+  color: var(--ciamik-surface);
+  animation: ciamik-fade-in var(--dur-fast) var(--ease-out);
+  z-index: 10;
+  gap: var(--space-md);
+}
+
+.selectedCount {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.bulkActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* ── Table Layout ── */
+.tableWrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: inherit;
+  font-size: 13.5px;
+}
+
+.th {
+  padding: 12px var(--space-md);
+  background-color: var(--ciamik-bg);
+  border-bottom: 1px solid var(--ciamik-border);
+  color: var(--ciamik-text-secondary);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  user-select: none;
+}
+
+.td {
+  padding: 14px var(--space-md);
+  border-bottom: 1px solid var(--ciamik-border-faint);
+  color: var(--ciamik-ink);
+  vertical-align: middle;
+}
+
+.tr {
+  transition: background-color var(--dur-fast) var(--ease);
+}
+
+.tr:hover {
+  background-color: rgba(var(--ciamik-primary-rgb), 0.03);
+}
+
+.selectedRow {
+  background-color: rgba(var(--ciamik-primary-rgb), 0.06);
+}
+
+.selectedRow:hover {
+  background-color: rgba(var(--ciamik-primary-rgb), 0.08);
+}
+
+/* ── Alignment ── */
+.left {
+  text-align: left;
+}
+
+.center {
+  text-align: center;
+}
+
+.right {
+  text-align: right;
+}
+
+/* ── Columns ── */
+.checkboxCol {
+  width: 48px;
+  text-align: center;
+  padding-right: 0;
+}
+
+.actionsCol {
+  width: 80px;
+  text-align: center;
+}
+
+.rowActionsWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+}
+
+/* ── Sortable Headers ── */
+.sortableHeader:hover {
+  background-color: var(--ciamik-navy-50);
+}
+
+:global(.dark) .sortableHeader:hover {
+  background-color: var(--ciamik-navy-800);
+}
+
+.headerContent {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sortIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ciamik-text-secondary);
+}
+
+/* ── States ── */
+.loadingCell,
+.emptyCell {
+  padding: var(--space-2xl) var(--space-md);
+  text-align: center;
+}
+
+.loadingWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--ciamik-text-secondary);
+  font-size: 13.5px;
+}
+
+.spinner {
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--ciamik-border-faint);
+  border-top-color: var(--ciamik-primary);
+  border-radius: 50%;
+  animation: ciamik-spin var(--dur-slow) linear infinite;
+}
+
+.emptyStateDefault {
+  color: var(--ciamik-text-secondary);
+  font-size: 13.5px;
+}
+
+@keyframes ciamik-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ciamik-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

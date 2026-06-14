@@ -1,0 +1,89 @@
+.container {
+  display: inline-flex;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+}
+
+.input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: var(--ciamik-surface);
+  border: 1.5px solid var(--ciamik-border);
+  border-radius: var(--r-sm);
+  transition: background-color var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease);
+}
+
+.container:hover input ~ .checkmark {
+  border-color: var(--ciamik-text-secondary);
+}
+
+.container input:focus-visible ~ .checkmark {
+  box-shadow: var(--ciamik-focus-ring);
+  border-color: var(--ciamik-primary);
+}
+
+.container input:checked ~ .checkmark {
+  background-color: var(--ciamik-primary);
+  border-color: var(--ciamik-primary);
+}
+
+.container input:disabled ~ .checkmark {
+  background-color: var(--ciamik-bg);
+  border-color: var(--ciamik-border-faint);
+  cursor: not-allowed;
+}
+
+/* ── Checkmark symbol ── */
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 5px;
+  top: 2px;
+  width: 5px;
+  height: 9px;
+  border: solid var(--ciamik-surface);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checked::after {
+  display: block;
+}
+
+/* ── Indeterminate symbol ── */
+.indeterminate {
+  background-color: var(--ciamik-primary);
+  border-color: var(--ciamik-primary);
+}
+
+.indeterminate::after {
+  content: "";
+  position: absolute;
+  display: block;
+  left: 4px;
+  top: 7px;
+  width: 8px;
+  height: 2px;
+  background-color: var(--ciamik-surface);
+  border: none;
+  transform: none;
+}

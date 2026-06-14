@@ -1,0 +1,75 @@
+.numberedWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  width: 100%;
+  padding: var(--space-md) 0;
+  user-select: none;
+}
+
+.pageNumbers {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pageBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  background-color: var(--ciamik-surface);
+  border: 1px solid var(--ciamik-border);
+  border-radius: var(--r-sm);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ciamik-ink);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease),
+              background-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+}
+
+.pageBtn:hover {
+  border-color: var(--ciamik-text-secondary);
+  background-color: var(--ciamik-bg);
+}
+
+.activePageBtn {
+  background-color: var(--ciamik-primary);
+  border-color: var(--ciamik-primary);
+  color: var(--ciamik-surface);
+}
+
+.activePageBtn:hover {
+  background-color: var(--ciamik-primary-hover);
+  border-color: var(--ciamik-primary-hover);
+  color: var(--ciamik-surface);
+}
+
+.ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  color: var(--ciamik-text-secondary);
+  font-size: 13px;
+}
+
+/* ── Load More Strategy ── */
+.loadMoreWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--space-md) 0;
+}
+
+.loadMoreBtn {
+  min-width: 180px;
+}

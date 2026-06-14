@@ -1,0 +1,90 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  width: 100%;
+}
+
+.searchRow {
+  display: flex;
+  width: 100%;
+}
+
+.searchInput {
+  width: 100%;
+}
+
+.clearBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ciamik-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: var(--r-sm);
+  transition: background-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+}
+
+.clearBtn:hover {
+  background-color: rgba(var(--ciamik-ink-rgb), 0.05);
+  color: var(--ciamik-ink);
+}
+
+/* ── Filter Row ── */
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-wrap: wrap;
+}
+
+.filterChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--ciamik-surface);
+  border: 1px solid var(--ciamik-border);
+  border-radius: var(--r-pill);
+  padding: 6px 14px;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ciamik-text-secondary);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease),
+              background-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+  user-select: none;
+}
+
+.filterChip:hover {
+  border-color: var(--ciamik-text-secondary);
+  background-color: var(--ciamik-bg);
+}
+
+.activeChip {
+  background-color: var(--ciamik-teal-50);
+  border-color: var(--ciamik-primary);
+  color: var(--ciamik-primary-hover);
+}
+
+:global(.dark) .activeChip {
+  background-color: rgba(var(--ciamik-primary-rgb), 0.15);
+  color: var(--ciamik-primary);
+}
+
+.activeChip:hover {
+  background-color: var(--ciamik-teal-50);
+  border-color: var(--ciamik-primary);
+}
+
+.activeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--ciamik-primary);
+  display: inline-block;
+}

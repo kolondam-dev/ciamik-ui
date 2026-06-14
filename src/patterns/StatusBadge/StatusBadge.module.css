@@ -1,0 +1,14 @@
+.inner {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.iconWrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.1em;
+  height: 1.1em;
+}

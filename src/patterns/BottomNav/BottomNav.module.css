@@ -1,0 +1,97 @@
+.bottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background-color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--ciamik-border-faint);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  /* iOS safe-area support */
+  padding-bottom: env(safe-area-inset-bottom);
+  height: calc(56px + env(safe-area-inset-bottom));
+}
+
+:global(.dark) .bottomNav {
+  background-color: rgba(27, 38, 79, 0.9);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+.navBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  background: transparent;
+  border: none;
+  height: 100%;
+  color: var(--ciamik-text-secondary);
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  gap: 3px;
+  outline: none;
+}
+
+.activeBtn {
+  color: var(--ciamik-primary);
+}
+
+:global(.dark) .activeBtn {
+  color: var(--ciamik-primary-hover);
+}
+
+.iconContainer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 22px;
+  height: 22px;
+}
+
+.iconContainer svg {
+  width: 100%;
+  height: 100%;
+}
+
+.badge {
+  position: absolute;
+  top: -4px;
+  right: -6px;
+  background-color: var(--ciamik-danger);
+  color: var(--ciamik-surface);
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: var(--r-pill);
+  min-width: 14px;
+  text-align: center;
+}
+
+.label {
+  white-space: nowrap;
+}
+
+/* Hide on desktop/large tablets */
+@media (min-width: 769px) {
+  .bottomNav {
+    display: none;
+  }
+}

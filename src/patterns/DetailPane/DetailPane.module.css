@@ -1,0 +1,167 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(14, 20, 48, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 1030;
+}
+
+.pane {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 440px;
+  background-color: var(--ciamik-surface);
+  border-left: 1px solid var(--ciamik-border);
+  box-shadow: var(--sh-lg);
+  display: flex;
+  flex-direction: column;
+  z-index: 1040;
+  transition: transform var(--dur-base) var(--ease);
+}
+
+.pushMode {
+  /* push mode doesn't need high elevation or overlay shadow */
+  box-shadow: none;
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--ciamik-border-faint);
+  flex-shrink: 0;
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  color: var(--ciamik-ink);
+}
+
+.title {
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.navButtons {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background-color: var(--ciamik-navy-50);
+  border-radius: var(--r-sm);
+  padding: 2px;
+}
+
+:global(.dark) .navButtons {
+  background-color: var(--ciamik-navy-800);
+}
+
+.navBtn {
+  background: transparent;
+  border: none;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ciamik-text-secondary);
+  border-radius: var(--r-sm);
+  transition: background-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+}
+
+.navBtn:hover:not(:disabled) {
+  background-color: var(--ciamik-surface);
+  color: var(--ciamik-ink);
+}
+
+:global(.dark) .navBtn:hover:not(:disabled) {
+  background-color: var(--ciamik-navy-900);
+  color: var(--ciamik-bg);
+}
+
+.navBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ciamik-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xs);
+  border-radius: var(--r-sm);
+  transition: background-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+  opacity: 0.65;
+}
+
+.closeBtn:hover {
+  opacity: 1;
+  background-color: rgba(var(--ciamik-ink-rgb), 0.05);
+}
+
+/* ── Tabs ── */
+.tabsRow {
+  display: flex;
+  border-bottom: 1px solid var(--ciamik-border-faint);
+  padding: 0 var(--space-lg);
+  gap: var(--space-md);
+  flex-shrink: 0;
+}
+
+.tabBtn {
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ciamik-text-secondary);
+  padding: 12px 0;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: border-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+  user-select: none;
+}
+
+.tabBtn:hover {
+  color: var(--ciamik-ink);
+}
+
+:global(.dark) .tabBtn:hover {
+  color: var(--ciamik-bg);
+}
+
+.activeTabBtn {
+  border-bottom-color: var(--ciamik-primary);
+  color: var(--ciamik-primary-hover);
+}
+
+/* ── Body ── */
+.body {
+  padding: var(--space-lg);
+  overflow-y: auto;
+  flex: 1;
+  font-family: inherit;
+  font-size: 13.5px;
+  color: var(--ciamik-text-secondary);
+  line-height: 1.5;
+}

@@ -6,8 +6,8 @@ export * from './provider';
 // Tier 1 — Primitive Components
 export * from './primitives';
 
-// Tier 2 — Pattern Components (TBD in Phase 3)
-// export * from './patterns';
+// Tier 2 — Pattern Components
+export * from './patterns';
 
 // Tier 3 — Block Components (TBD in Phase 4)
 // export * from './blocks';

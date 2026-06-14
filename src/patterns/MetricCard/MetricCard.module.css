@@ -1,0 +1,89 @@
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  margin-bottom: var(--space-xs);
+}
+
+.title {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ciamik-text-secondary);
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xs);
+}
+
+.valueRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.value {
+  font-family: inherit;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--ciamik-ink);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.deltaContainer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.deltaBadge {
+  font-size: 10px;
+  padding: 2px 6px;
+}
+
+.deltaInner {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.deltaLabel {
+  font-size: 11px;
+  color: var(--ciamik-text-secondary);
+}
+
+.sparklineSlot {
+  flex-shrink: 0;
+  width: 80px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.recommendationWrapper {
+  margin-top: var(--space-sm);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--ciamik-border-faint);
+}
+
+.recommendation {
+  margin: 0;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ciamik-primary);
+  font-weight: 500;
+}
+
+:global(.dark) .recommendation {
+  color: var(--ciamik-primary-hover);
+}

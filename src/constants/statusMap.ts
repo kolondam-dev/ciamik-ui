@@ -62,7 +62,7 @@ export const STATUS_MAP: Record<string, StatusConfig> = {
   DELIVERED: {
     label: 'Sampai',
     intent: 'neutral',
-    icon: 'MapPinCheck',
+    icon: 'MapPin',
     iconFallback: 'ti-map-pin-check',
     isFinal: false,
     category: 'order',

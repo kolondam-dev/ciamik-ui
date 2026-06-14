@@ -1,0 +1,108 @@
+.alertWrapper {
+  position: fixed;
+  top: var(--space-md);
+  left: var(--space-md);
+  right: var(--space-md);
+  z-index: 1040;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  transition: left var(--dur-base) var(--ease);
+}
+
+.sidebarOffset {
+  left: calc(var(--space-md) + 240px); /* offsets alert to clear BO sidebar width */
+}
+
+@media (max-width: 768px) {
+  .sidebarOffset {
+    left: var(--space-md); /* disable offset on mobile since sidebar collapses */
+  }
+}
+
+.container {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 640px;
+  background-color: var(--ciamik-surface);
+  border: 1px solid var(--ciamik-border);
+  border-radius: var(--r-md);
+  padding: 12px var(--space-md);
+  box-shadow: var(--sh-md);
+  gap: var(--space-sm);
+  pointer-events: auto;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.title {
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ciamik-ink);
+  line-height: 1.4;
+}
+
+.body {
+  font-family: inherit;
+  font-size: 12.5px;
+  color: var(--ciamik-text-secondary);
+  line-height: 1.5;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ciamik-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xs);
+  border-radius: var(--r-sm);
+  transition: background-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+  opacity: 0.65;
+  margin-top: -2px;
+}
+
+.closeBtn:hover {
+  opacity: 1;
+  background-color: rgba(var(--ciamik-ink-rgb), 0.05);
+}
+
+/* ── Colors ── */
+.info .iconWrapper {
+  color: var(--ciamik-navy-600);
+}
+
+.success .iconWrapper {
+  color: var(--ciamik-success);
+}
+
+.warning .iconWrapper {
+  color: var(--ciamik-warning-ink);
+}
+
+:global(.dark) .warning .iconWrapper {
+  color: var(--ciamik-warning);
+}
+
+.danger .iconWrapper {
+  color: var(--ciamik-danger);
+}
