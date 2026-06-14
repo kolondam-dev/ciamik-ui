@@ -1,0 +1,48 @@
+.card {
+  background-color: var(--ciamik-surface);
+  border: 1px solid var(--ciamik-border);
+  border-radius: var(--r-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform var(--dur-base) var(--ease),
+              box-shadow var(--dur-base) var(--ease),
+              border-color var(--dur-base) var(--ease);
+}
+
+.header {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--ciamik-border-faint);
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--ciamik-ink);
+}
+
+.body {
+  padding: var(--space-md);
+  flex: 1;
+  color: var(--ciamik-ink);
+  font-family: inherit;
+}
+
+.footer {
+  padding: var(--space-md);
+  border-top: 1px solid var(--ciamik-border-faint);
+  background-color: rgba(var(--ciamik-ink-rgb), 0.01);
+}
+
+/* ── Interactive Mode ── */
+.interactive {
+  cursor: pointer;
+}
+
+.interactive:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sh-md);
+  border-color: rgba(var(--ciamik-primary-rgb), 0.4);
+}
+
+.interactive:active {
+  transform: translateY(0);
+  box-shadow: var(--sh-sm);
+}

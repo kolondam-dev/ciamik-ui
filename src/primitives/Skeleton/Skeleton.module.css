@@ -1,0 +1,48 @@
+.skeleton {
+  background-color: var(--ciamik-navy-50);
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Shapes ── */
+.text {
+  height: 1em;
+  border-radius: var(--r-sm);
+  width: 100%;
+}
+
+.circle {
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+}
+
+.rect {
+  border-radius: var(--r-md);
+}
+
+.card {
+  border-radius: var(--r-lg);
+  border: 1px solid var(--ciamik-border-faint);
+  min-height: 120px;
+}
+
+/* ── Animation Shimmer ── */
+.animated {
+  background: linear-gradient(
+    90deg,
+    var(--ciamik-navy-50) 25%,
+    rgba(255, 255, 255, 0.45) 50%,
+    var(--ciamik-navy-50) 75%
+  );
+  background-size: 200% 100%;
+  animation: ciamik-shimmer 1.5s infinite linear;
+}
+
+@keyframes ciamik-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

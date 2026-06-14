@@ -1,0 +1,60 @@
+.spinner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.spinner svg {
+  animation: ciamik-spin var(--dur-slow) linear infinite;
+  width: 100%;
+  height: 100%;
+}
+
+.circle {
+  opacity: 0.25;
+}
+
+.spinner svg circle {
+  opacity: 1;
+}
+
+/* ── Sizes ── */
+.sm {
+  width: 16px;
+  height: 16px;
+}
+
+.md {
+  width: 24px;
+  height: 24px;
+}
+
+.lg {
+  width: 36px;
+  height: 36px;
+}
+
+/* ── Colors ── */
+.primary {
+  color: var(--ciamik-primary);
+}
+
+.accent {
+  color: var(--ciamik-accent);
+}
+
+.neutral {
+  color: var(--ciamik-text-secondary);
+}
+
+.current {
+  color: inherit;
+}
+
+@keyframes ciamik-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

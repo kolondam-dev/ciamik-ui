@@ -1,0 +1,111 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  width: 100%;
+}
+
+.label {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ciamik-ink);
+  line-height: 1.4;
+  user-select: none;
+}
+
+.selectContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
+  border: 1px solid var(--ciamik-border);
+  border-radius: var(--r-md);
+  background-color: var(--ciamik-surface);
+  transition: border-color var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease);
+  height: 40px;
+  width: 100%;
+}
+
+.selectContainer:focus-within {
+  border-color: var(--ciamik-primary);
+  box-shadow: var(--ciamik-focus-ring);
+}
+
+.select {
+  flex: 1;
+  height: 100%;
+  border: none;
+  background: transparent;
+  padding: 0 var(--space-md);
+  padding-right: 40px; /* space for arrow icon */
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ciamik-ink);
+  outline: none;
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+.select::placeholder {
+  color: var(--ciamik-text-tertiary);
+  opacity: 1;
+}
+
+.iconContainer {
+  position: absolute;
+  right: var(--space-md);
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  color: var(--ciamik-text-secondary);
+}
+
+/* ── Disabled State ── */
+.disabled .label {
+  color: var(--ciamik-text-tertiary);
+}
+
+.disabledContainer {
+  background-color: var(--ciamik-bg);
+  border-color: var(--ciamik-border-faint);
+  cursor: not-allowed;
+}
+
+.disabledContainer select {
+  color: var(--ciamik-text-secondary);
+  cursor: not-allowed;
+}
+
+.disabledContainer .iconContainer {
+  color: var(--ciamik-text-tertiary);
+}
+
+/* ── Error State ── */
+.error {
+  border-color: var(--ciamik-danger);
+}
+
+.error:focus-within {
+  border-color: var(--ciamik-danger);
+  box-shadow: 0 0 0 3px rgba(var(--ciamik-danger-rgb), 0.15);
+}
+
+/* ── Text Elements ── */
+.helperText {
+  font-size: 12px;
+  color: var(--ciamik-text-secondary);
+  margin: 0;
+}
+
+.errorText {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ciamik-danger);
+  margin: 0;
+}

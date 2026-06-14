@@ -1,0 +1,125 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  padding: var(--space-md);
+}
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(14, 20, 48, 0.4); /* dark navy backdrop overlay */
+  backdrop-filter: blur(4px);
+}
+
+.modalBox {
+  position: relative;
+  background-color: var(--ciamik-surface);
+  border-radius: var(--r-xl);
+  border: 1px solid var(--ciamik-border);
+  box-shadow: var(--sh-lg);
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1060;
+  max-height: 90vh;
+}
+
+.destructiveModal {
+  border-top: 4px solid var(--ciamik-danger);
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  border-bottom: 1px solid var(--ciamik-border-faint);
+}
+
+.titleWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  color: var(--ciamik-ink);
+}
+
+.warningIcon {
+  color: var(--ciamik-danger);
+}
+
+.title {
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ciamik-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xs);
+  border-radius: var(--r-sm);
+  transition: background-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+  opacity: 0.65;
+}
+
+.closeBtn:hover {
+  opacity: 1;
+  background-color: rgba(var(--ciamik-ink-rgb), 0.05);
+}
+
+/* ── Body ── */
+.body {
+  padding: var(--space-lg);
+  overflow-y: auto;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ciamik-text-secondary);
+}
+
+/* ── Footer ── */
+.footer {
+  padding: var(--space-md) var(--space-lg);
+  border-top: 1px solid var(--ciamik-border-faint);
+  background-color: rgba(var(--ciamik-ink-rgb), 0.01);
+}
+
+.defaultFooterActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+}
+
+/* Responsive bottom-sheet transition on mobile */
+@media (max-width: 576px) {
+  .overlay {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modalBox {
+    border-radius: var(--r-xl) var(--r-xl) 0 0;
+    max-height: 85vh;
+  }
+}

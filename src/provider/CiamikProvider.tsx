@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import type { BrandTokens, CiamikProviderProps } from './types';
+import { ToastProvider } from '../primitives/Toast';
 
 /** Map from BrandTokens property names to CSS custom property names */
 const TOKEN_MAP: Record<keyof BrandTokens, string> = {
@@ -81,7 +82,7 @@ export function CiamikProvider({
         style={style as React.CSSProperties}
         data-ciamik-root=""
       >
-        {children}
+        <ToastProvider>{children}</ToastProvider>
       </div>
     </CiamikContext.Provider>
   );

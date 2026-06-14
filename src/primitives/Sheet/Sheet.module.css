@@ -1,0 +1,107 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1050;
+}
+
+.backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(14, 20, 48, 0.4);
+  backdrop-filter: blur(4px);
+}
+
+.sheetBox {
+  position: relative;
+  background-color: var(--ciamik-surface);
+  border-radius: var(--r-xl) var(--r-xl) 0 0;
+  border: 1px solid var(--ciamik-border);
+  border-bottom: none;
+  box-shadow: var(--sh-lg);
+  width: 100%;
+  max-width: 540px; /* limits width on desktop, full on mobile */
+  display: flex;
+  flex-direction: column;
+  z-index: 1060;
+  max-height: 85vh;
+  touch-action: none;
+}
+
+.handleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  width: 100%;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.handle {
+  width: 40px;
+  height: 5px;
+  border-radius: var(--r-pill);
+  background-color: var(--ciamik-navy-200);
+}
+
+:global(.dark) .handle {
+  background-color: var(--ciamik-navy-600);
+}
+
+/* ── Header ── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-lg) var(--space-sm) var(--space-lg);
+  border-bottom: 1px solid var(--ciamik-border-faint);
+}
+
+.title {
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ciamik-ink);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ciamik-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xs);
+  border-radius: var(--r-sm);
+  transition: background-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+  opacity: 0.65;
+}
+
+.closeBtn:hover {
+  opacity: 1;
+  background-color: rgba(var(--ciamik-ink-rgb), 0.05);
+}
+
+/* ── Body ── */
+.body {
+  padding: var(--space-lg);
+  overflow-y: auto;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ciamik-text-secondary);
+  touch-action: pan-y; /* allow scrolling inside body */
+}

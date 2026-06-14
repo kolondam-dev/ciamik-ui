@@ -1,0 +1,122 @@
+.toast {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 12px var(--space-md);
+  border-radius: var(--r-md);
+  background-color: rgba(255, 255, 255, 0.85); /* semi-transparent surface */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--ciamik-border);
+  box-shadow: var(--sh-lg);
+  color: var(--ciamik-ink);
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 500;
+  max-width: 380px;
+  width: max-content;
+  pointer-events: auto;
+  animation: ciamik-fade-in var(--dur-base) var(--ease-out);
+  transition: transform var(--dur-base) var(--ease),
+              opacity var(--dur-base) var(--ease);
+}
+
+:global(.dark) .toast {
+  background-color: rgba(27, 38, 79, 0.85); /* semi-transparent navy surface */
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--ciamik-bg);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.message {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--ciamik-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xs);
+  border-radius: var(--r-sm);
+  transition: background-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+  opacity: 0.65;
+}
+
+.closeBtn:hover {
+  opacity: 1;
+  background-color: rgba(var(--ciamik-ink-rgb), 0.05);
+}
+
+:global(.dark) .closeBtn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--ciamik-bg);
+}
+
+/* ── Semantic Icons ── */
+.successIcon {
+  color: var(--ciamik-success);
+}
+
+.warningIcon {
+  color: var(--ciamik-warning-ink);
+}
+
+:global(.dark) .warningIcon {
+  color: var(--ciamik-warning);
+}
+
+.errorIcon {
+  color: var(--ciamik-danger);
+}
+
+.infoIcon {
+  color: var(--ciamik-navy-600);
+}
+
+:global(.dark) .infoIcon {
+  color: var(--ciamik-text-secondary);
+}
+
+@keyframes ciamik-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.container {
+  position: fixed;
+  top: var(--space-md);
+  right: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+@media (max-width: 576px) {
+  .container {
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    width: max-content;
+    top: var(--space-md);
+  }
+}

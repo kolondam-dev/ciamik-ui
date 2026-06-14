@@ -1,0 +1,141 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-weight: 600;
+  border-radius: var(--r-md);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease),
+              transform var(--dur-fast) var(--ease);
+  user-select: none;
+  position: relative;
+  gap: var(--space-xs);
+  outline: none;
+}
+
+.btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn:focus-visible {
+  box-shadow: var(--ciamik-focus-ring);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Sizes ── */
+.sm {
+  height: 32px;
+  padding: 0 var(--space-sm);
+  font-size: 13px;
+  gap: 4px;
+}
+
+.md {
+  height: 40px;
+  padding: 0 var(--space-md);
+  font-size: 14px;
+  gap: 8px;
+}
+
+.lg {
+  height: 48px;
+  padding: 0 var(--space-lg);
+  font-size: 16px;
+  gap: 8px;
+}
+
+/* ── Variants ── */
+.primary {
+  background-color: var(--ciamik-primary);
+  color: var(--ciamik-surface);
+}
+
+.primary:hover:not(:disabled) {
+  background-color: var(--ciamik-primary-hover);
+}
+
+.accent {
+  background-color: var(--ciamik-accent);
+  color: var(--ciamik-surface);
+}
+
+.accent:hover:not(:disabled) {
+  background-color: var(--ciamik-accent-press);
+}
+
+.secondary {
+  background-color: var(--ciamik-surface);
+  border-color: var(--ciamik-border);
+  color: var(--ciamik-ink);
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: var(--ciamik-bg);
+  border-color: var(--ciamik-text-secondary);
+}
+
+.ghost {
+  background-color: transparent;
+  color: var(--ciamik-ink);
+}
+
+.ghost:hover:not(:disabled) {
+  background-color: rgba(var(--ciamik-ink-rgb), 0.05);
+}
+
+.danger {
+  background-color: var(--ciamik-danger);
+  color: var(--ciamik-surface);
+}
+
+.danger:hover:not(:disabled) {
+  background-color: var(--ciamik-red-800);
+}
+
+/* ── Loading Spinner ── */
+.loading {
+  cursor: wait;
+}
+
+.spinner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25em;
+  height: 1.25em;
+}
+
+.spinner svg {
+  animation: ciamik-spin var(--dur-slow) linear infinite;
+  width: 100%;
+  height: 100%;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.2em;
+  height: 1.2em;
+}
+
+.content {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+@keyframes ciamik-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
