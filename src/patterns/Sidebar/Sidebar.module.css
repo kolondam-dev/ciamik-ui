@@ -2,9 +2,9 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: var(--ciamik-navy-900);
-  border-right: 1px solid rgba(255, 255, 255, 0.08);
-  color: var(--ciamik-navy-200);
+  background-color: var(--ciamik-sidebar-bg);
+  border-right: 1px solid var(--ciamik-sidebar-border);
+  color: var(--ciamik-sidebar-text);
   transition: width var(--dur-base) var(--ease),
               transform var(--dur-base) var(--ease);
   position: fixed;
@@ -29,7 +29,7 @@
   justify-content: space-between;
   height: 64px;
   padding: 0 var(--space-md);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid var(--ciamik-sidebar-border);
   position: relative;
   flex-shrink: 0;
 }
@@ -54,9 +54,9 @@
 }
 
 .toggleBtn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: var(--ciamik-navy-200);
+  background: var(--ciamik-sidebar-toggle-bg);
+  border: 1px solid var(--ciamik-sidebar-toggle-border);
+  color: var(--ciamik-sidebar-text);
   cursor: pointer;
   width: 24px;
   height: 24px;
@@ -69,8 +69,8 @@
 }
 
 .toggleBtn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: var(--ciamik-surface);
+  background-color: var(--ciamik-sidebar-toggle-hover);
+  color: var(--ciamik-sidebar-hover-text);
 }
 
 /* ── Content ── */
@@ -94,7 +94,7 @@
   font-size: 10px;
   font-weight: 800;
   text-transform: uppercase;
-  color: var(--ciamik-navy-400);
+  color: var(--ciamik-sidebar-text-muted);
   margin: 0 0 var(--space-xs) var(--space-sm);
   letter-spacing: 0.05em;
 }
@@ -116,7 +116,7 @@
   border: none;
   border-radius: var(--r-md);
   padding: 10px;
-  color: var(--ciamik-navy-200);
+  color: var(--ciamik-sidebar-text);
   font-family: inherit;
   font-size: 13.5px;
   font-weight: 600;
@@ -127,8 +127,8 @@
 }
 
 .navItem:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-  color: var(--ciamik-surface);
+  background-color: var(--ciamik-sidebar-hover-bg);
+  color: var(--ciamik-sidebar-hover-text);
 }
 
 .activeItem {
@@ -154,7 +154,7 @@
 /* ── Footer ── */
 .footer {
   padding: var(--space-md);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--ciamik-sidebar-border);
   flex-shrink: 0;
 }
 
@@ -166,7 +166,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(14, 20, 48, 0.4);
+  background-color: var(--ciamik-overlay-bg);
   backdrop-filter: blur(4px);
   z-index: 990;
 }
@@ -195,7 +195,7 @@
     justify-content: center;
     background: transparent;
     border: none;
-    color: var(--ciamik-navy-200);
+    color: var(--ciamik-sidebar-text);
     cursor: pointer;
     padding: var(--space-xs);
   }

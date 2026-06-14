@@ -116,11 +116,7 @@
 
 /* ── Sortable Headers ── */
 .sortableHeader:hover {
-  background-color: var(--ciamik-navy-50);
-}
-
-:global(.dark) .sortableHeader:hover {
-  background-color: var(--ciamik-navy-800);
+  background-color: var(--ciamik-bg-hover);
 }
 
 .headerContent {

@@ -1,0 +1,135 @@
+/* ── COMPACT VARIANT (e.g., Sidebar / Guest View) ── */
+.compact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  padding: var(--space-md) 0;
+  width: 100%;
+}
+
+.compact .tb {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ciamik-text-secondary);
+  transition: color var(--dur-fast) var(--ease);
+  cursor: default;
+}
+
+.compact .tbIcon {
+  font-size: 16px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.compact .tbIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.compact .tbText h4 {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0;
+  color: inherit;
+}
+
+.compact .tb:hover {
+  color: var(--ciamik-primary);
+}
+
+
+/* ── EXPANDED VARIANT (e.g., Footer / Checkout Section) ── */
+.expanded {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-xl);
+  padding: var(--space-md) 0;
+  width: 100%;
+}
+
+.expanded .tb {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  transition: transform var(--dur-base) var(--ease);
+  cursor: default;
+}
+
+.expanded .tb:hover {
+  transform: translateY(-2px);
+}
+
+.expanded .tbIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  transition: transform var(--dur-base) var(--ease);
+}
+
+.expanded .tbIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.expanded .tb:hover .tbIcon {
+  transform: scale(1.15);
+}
+
+.expanded .tbText h4 {
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: var(--ciamik-ink);
+}
+
+.expanded .tbText p {
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ciamik-text-secondary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ── Mobile Overrides for Expanded Footers ── */
+@media (max-width: 768px) {
+  .expanded {
+    gap: var(--space-md);
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding: var(--space-sm) 0 !important;
+  }
+
+  .expanded .tb {
+    gap: var(--space-sm);
+  }
+
+  .expanded .tbIcon {
+    width: 24px;
+    height: 24px;
+    font-size: 22px;
+  }
+
+  .expanded .tbText h4 {
+    font-size: 12px;
+    margin-bottom: 2px;
+  }
+
+  .expanded .tbText p {
+    font-size: 10.5px;
+    line-height: 1.3;
+  }
+}

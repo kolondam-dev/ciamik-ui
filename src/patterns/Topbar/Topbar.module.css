@@ -16,13 +16,9 @@
 }
 
 .blur {
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: var(--ciamik-glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-}
-
-:global(.dark) .blur {
-  background-color: rgba(27, 38, 79, 0.85);
 }
 
 .container {

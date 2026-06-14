@@ -88,21 +88,17 @@
 
 /* ── Colors ── */
 .info .iconWrapper {
-  color: var(--ciamik-navy-600);
+  color: var(--ciamik-info-text);
 }
 
 .success .iconWrapper {
-  color: var(--ciamik-success);
+  color: var(--ciamik-success-text);
 }
 
 .warning .iconWrapper {
-  color: var(--ciamik-warning-ink);
-}
-
-:global(.dark) .warning .iconWrapper {
-  color: var(--ciamik-warning);
+  color: var(--ciamik-warning-text);
 }
 
 .danger .iconWrapper {
-  color: var(--ciamik-danger);
+  color: var(--ciamik-danger-text);
 }

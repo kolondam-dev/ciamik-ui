@@ -57,46 +57,46 @@
 
 .closeBtn:hover {
   opacity: 1;
-  background-color: rgba(var(--ciamik-ink-rgb), 0.05);
+  background-color: var(--ciamik-bg-hover);
 }
 
 /* ── Variants ── */
 .info {
-  background-color: var(--ciamik-navy-50);
-  border-color: var(--ciamik-border);
+  background-color: var(--ciamik-info-bg);
+  border-color: var(--ciamik-info-border);
   color: var(--ciamik-ink);
 }
 
 .info .iconWrapper {
-  color: var(--ciamik-navy-600);
+  color: var(--ciamik-info-text);
 }
 
 .success {
-  background-color: var(--ciamik-teal-50);
-  border-color: rgba(var(--ciamik-primary-rgb), 0.25);
-  color: var(--ciamik-teal-900);
+  background-color: var(--ciamik-success-bg);
+  border-color: var(--ciamik-success-border);
+  color: var(--ciamik-success-text);
 }
 
 .success .iconWrapper {
-  color: var(--ciamik-teal-600);
+  color: var(--ciamik-success-text);
 }
 
 .warning {
-  background-color: var(--ciamik-mustard-50);
-  border-color: rgba(var(--ciamik-mustard-600-rgb), 0.25);
-  color: var(--ciamik-mustard-800);
+  background-color: var(--ciamik-warning-bg);
+  border-color: var(--ciamik-warning-border);
+  color: var(--ciamik-warning-text);
 }
 
 .warning .iconWrapper {
-  color: var(--ciamik-mustard-600);
+  color: var(--ciamik-warning-text);
 }
 
 .danger {
-  background-color: var(--ciamik-red-50);
-  border-color: rgba(var(--ciamik-danger-rgb), 0.2);
-  color: var(--ciamik-red-800);
+  background-color: var(--ciamik-danger-bg);
+  border-color: var(--ciamik-danger-border);
+  color: var(--ciamik-danger-text);
 }
 
 .danger .iconWrapper {
-  color: var(--ciamik-red-600);
+  color: var(--ciamik-danger-text);
 }

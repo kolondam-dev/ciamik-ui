@@ -1,0 +1,315 @@
+.container {
+  position: relative;
+  background-color: var(--ciamik-surface);
+  border-radius: var(--r-xl);
+  padding: var(--space-xl);
+  border: 1px solid var(--ciamik-border-faint);
+  box-shadow: var(--sh-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  max-width: 380px;
+  box-sizing: border-box;
+  transition: transform var(--dur-fast) var(--ease);
+}
+
+.shake {
+  animation: otp-shake 0.4s ease-in-out;
+}
+
+@keyframes otp-shake {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20%, 60% {
+    transform: translateX(-6px);
+  }
+  40%, 80% {
+    transform: translateX(6px);
+  }
+}
+
+.progress {
+  display: flex;
+  gap: 8px;
+  margin-bottom: var(--space-lg);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--ciamik-border-faint);
+  transition: background-color var(--dur-fast) var(--ease),
+              transform var(--dur-fast) var(--ease);
+}
+
+.activeDot {
+  background-color: var(--ciamik-primary);
+  transform: scale(1.3);
+}
+
+.errorAlert {
+  width: 100%;
+  background-color: var(--ciamik-danger-bg);
+  color: var(--ciamik-danger-text);
+  border: 1px solid var(--ciamik-danger-border);
+  padding: 8px 12px;
+  border-radius: var(--r-md);
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: var(--space-md);
+  text-align: left;
+  line-height: 1.4;
+  box-sizing: border-box;
+}
+
+.step {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.iconWrapper {
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.waIcon {
+  color: var(--ciamik-success-text);
+}
+
+.keyIcon {
+  color: var(--ciamik-primary);
+}
+
+.title {
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ciamik-ink);
+  margin: 0 0 var(--space-xs) 0;
+  line-height: 1.3;
+}
+
+.desc {
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ciamik-text-secondary);
+  margin: 0 0 var(--space-lg) 0;
+  line-height: 1.5;
+}
+
+.phoneHighlight {
+  color: var(--ciamik-ink);
+}
+
+/* ── Step 1 Phone Input ── */
+.phoneGroup {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--ciamik-border);
+  border-radius: var(--r-md);
+  width: 100%;
+  height: 44px;
+  overflow: hidden;
+  background-color: var(--ciamik-surface);
+  transition: border-color var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease);
+  margin-bottom: var(--space-md);
+  box-sizing: border-box;
+}
+
+.phoneGroup:focus-within {
+  border-color: var(--ciamik-primary);
+  box-shadow: var(--ciamik-focus-ring);
+}
+
+.prefix {
+  background-color: var(--ciamik-bg);
+  border-right: 1px solid var(--ciamik-border-faint);
+  color: var(--ciamik-text-secondary);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-md);
+  font-weight: 700;
+  font-size: 14px;
+  user-select: none;
+}
+
+.phoneInput {
+  flex: 1;
+  border: none;
+  background: transparent;
+  height: 100%;
+  padding: 0 var(--space-md);
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--ciamik-ink);
+  outline: none;
+  box-sizing: border-box;
+  font-variant-numeric: tabular-nums;
+  width: 100%;
+}
+
+.phoneInput::placeholder {
+  color: var(--ciamik-text-tertiary);
+}
+
+/* ── Step 2 Code Digits ── */
+.digitContainer {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: var(--space-lg);
+  width: 100%;
+}
+
+.digitInput {
+  width: 52px;
+  height: 60px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--ciamik-border);
+  background-color: var(--ciamik-surface);
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--ciamik-ink);
+  outline: none;
+  transition: border-color var(--dur-fast) var(--ease),
+              box-shadow var(--dur-fast) var(--ease),
+              background-color var(--dur-fast) var(--ease);
+  box-sizing: border-box;
+}
+
+.digitInput:focus {
+  border-color: var(--ciamik-primary);
+  box-shadow: var(--ciamik-focus-ring);
+}
+
+.digitFilled {
+  background-color: var(--ciamik-primary-bg);
+  border-color: var(--ciamik-primary);
+}
+
+/* ── Submit button ── */
+.ctaBtn {
+  width: 100%;
+  height: 44px;
+  background-color: var(--ciamik-primary);
+  color: var(--ciamik-surface);
+  border: none;
+  border-radius: var(--r-md);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--dur-fast) var(--ease),
+              transform var(--dur-fast) var(--ease);
+  outline: none;
+}
+
+.ctaBtn:hover:not(:disabled) {
+  background-color: var(--ciamik-primary-hover);
+}
+
+.ctaBtn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.ctaBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spinnerIcon {
+  animation: otp-spin var(--dur-slow) linear infinite;
+}
+
+@keyframes otp-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Resend block ── */
+.resendRow {
+  margin-top: var(--space-md);
+  font-size: 12.5px;
+}
+
+.timerText {
+  color: var(--ciamik-text-secondary);
+}
+
+.resendLink {
+  background: transparent;
+  border: none;
+  color: var(--ciamik-primary);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  outline: none;
+}
+
+.resendLink:hover {
+  color: var(--ciamik-primary-hover);
+}
+
+/* ── Success Block ── */
+.successStep {
+  justify-content: center;
+}
+
+.successCheck {
+  margin-bottom: var(--space-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkIcon {
+  color: var(--ciamik-success-text);
+  animation: otp-check-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes otp-check-pop {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ── Cancel button ── */
+.cancelBtn {
+  background: transparent;
+  border: none;
+  color: var(--ciamik-text-secondary);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: var(--space-md);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease);
+  outline: none;
+}
+
+.cancelBtn:hover {
+  color: var(--ciamik-ink);
+}

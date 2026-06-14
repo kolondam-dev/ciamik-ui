@@ -34,4 +34,55 @@
 
   /* ── Focus Ring ── */
   --ciamik-focus-ring:     0 0 0 3px rgba(var(--ciamik-primary-rgb), 0.15);
+  --ciamik-focus-ring-danger: 0 0 0 3px rgba(var(--ciamik-danger-rgb), 0.15);
+
+  /* ── Status Backgrounds & Text Colors ── */
+  --ciamik-success-bg:     var(--ciamik-teal-50);
+  --ciamik-success-text:   var(--ciamik-teal-600);
+  --ciamik-success-border: rgba(47, 122, 120, 0.25);
+
+  --ciamik-warning-bg:     var(--ciamik-mustard-50);
+  --ciamik-warning-text:   var(--ciamik-mustard-800);
+  --ciamik-warning-border: rgba(212, 160, 23, 0.25);
+
+  --ciamik-danger-bg:      var(--ciamik-red-50);
+  --ciamik-danger-text:    var(--ciamik-red-800);
+  --ciamik-danger-border:  rgba(192, 57, 43, 0.2);
+  --ciamik-danger-hover:   var(--ciamik-red-800);
+
+  --ciamik-info-bg:        var(--ciamik-navy-50);
+  --ciamik-info-text:      var(--ciamik-navy-600);
+  --ciamik-info-border:    rgba(61, 72, 112, 0.2);
+
+  --ciamik-highlight-bg:   var(--ciamik-coral-50);
+  --ciamik-highlight-text: var(--ciamik-coral-800);
+
+  /* ── Primary Highlights ── */
+  --ciamik-primary-bg:     rgba(var(--ciamik-primary-rgb), 0.08);
+  --ciamik-primary-text:   var(--ciamik-teal-600);
+  --ciamik-primary-border-hover: rgba(var(--ciamik-primary-rgb), 0.4);
+
+  /* ── Interactive State Backgrounds ── */
+  --ciamik-bg-hover:       rgba(var(--ciamik-ink-rgb), 0.05);
+  --ciamik-bg-active:      rgba(var(--ciamik-ink-rgb), 0.08);
+
+  /* ── Skeleton Shimmer ── */
+  --ciamik-skeleton-bg:      var(--ciamik-navy-50);
+  --ciamik-skeleton-shimmer: rgba(255, 255, 255, 0.45);
+
+  /* ── Sidebar (Default Dark Theme for Backoffice theme layout) ── */
+  --ciamik-sidebar-bg:            var(--ciamik-navy-900);
+  --ciamik-sidebar-border:        rgba(255, 255, 255, 0.08);
+  --ciamik-sidebar-text:          var(--ciamik-navy-200);
+  --ciamik-sidebar-text-muted:    var(--ciamik-navy-400);
+  --ciamik-sidebar-hover-bg:      rgba(255, 255, 255, 0.05);
+  --ciamik-sidebar-hover-text:    var(--ciamik-surface);
+  --ciamik-sidebar-toggle-bg:     rgba(255, 255, 255, 0.05);
+  --ciamik-sidebar-toggle-border: rgba(255, 255, 255, 0.1);
+  --ciamik-sidebar-toggle-hover:  rgba(255, 255, 255, 0.1);
+
+  /* ── Backdrop & Glassmorphism Overlay ── */
+  --ciamik-overlay-bg:     rgba(14, 20, 48, 0.4);
+  --ciamik-glass-bg:       rgba(var(--ciamik-surface-rgb), 0.85);
+  --ciamik-glass-border:   rgba(255, 255, 255, 0.08);
 }

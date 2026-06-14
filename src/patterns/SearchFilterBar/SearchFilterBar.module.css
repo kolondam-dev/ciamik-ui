@@ -66,18 +66,13 @@
 }
 
 .activeChip {
-  background-color: var(--ciamik-teal-50);
+  background-color: var(--ciamik-primary-bg);
   border-color: var(--ciamik-primary);
   color: var(--ciamik-primary-hover);
 }
 
-:global(.dark) .activeChip {
-  background-color: rgba(var(--ciamik-primary-rgb), 0.15);
-  color: var(--ciamik-primary);
-}
-
 .activeChip:hover {
-  background-color: var(--ciamik-teal-50);
+  background-color: var(--ciamik-primary-bg);
   border-color: var(--ciamik-primary);
 }
 

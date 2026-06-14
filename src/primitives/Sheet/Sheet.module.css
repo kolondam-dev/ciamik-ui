@@ -16,7 +16,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(14, 20, 48, 0.4);
+  background-color: var(--ciamik-overlay-bg);
   backdrop-filter: blur(4px);
 }
 
@@ -50,11 +50,11 @@
   width: 40px;
   height: 5px;
   border-radius: var(--r-pill);
-  background-color: var(--ciamik-navy-200);
+  background-color: var(--ciamik-text-tertiary);
 }
 
 :global(.dark) .handle {
-  background-color: var(--ciamik-navy-600);
+  background-color: var(--ciamik-text-secondary);
 }
 
 /* ── Header ── */
@@ -92,7 +92,7 @@
 
 .closeBtn:hover {
   opacity: 1;
-  background-color: rgba(var(--ciamik-ink-rgb), 0.05);
+  background-color: var(--ciamik-bg-hover);
 }
 
 /* ── Body ── */

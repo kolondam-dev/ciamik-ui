@@ -18,4 +18,36 @@
   --ciamik-primary-rgb:    91, 163, 160;
   --ciamik-surface-rgb:    27, 38, 79;
   --ciamik-ink-rgb:        237, 238, 243;
+
+  /* Status overrides for dark mode contrast */
+  --ciamik-success-bg:     rgba(91, 163, 160, 0.15);
+  --ciamik-success-text:   var(--ciamik-teal-300);
+  --ciamik-warning-bg:     rgba(212, 160, 23, 0.15);
+  --ciamik-warning-text:   var(--ciamik-mustard-300);
+  --ciamik-danger-bg:      rgba(226, 75, 74, 0.15);
+  --ciamik-danger-text:    var(--ciamik-red-400);
+  --ciamik-info-bg:        rgba(123, 130, 160, 0.15);
+  --ciamik-info-text:      var(--ciamik-navy-200);
+  --ciamik-highlight-bg:   rgba(255, 127, 80, 0.15);
+  --ciamik-highlight-text: var(--ciamik-coral-200);
+
+  --ciamik-overlay-bg:     rgba(14, 20, 48, 0.65);
+  --ciamik-glass-border:   rgba(255, 255, 255, 0.08);
+
+  /* New semantic overrides for dark mode contrast */
+  --ciamik-success-border: rgba(91, 163, 160, 0.3);
+  --ciamik-warning-border: rgba(212, 160, 23, 0.3);
+  --ciamik-danger-border:  rgba(226, 75, 74, 0.3);
+  --ciamik-info-border:    rgba(123, 130, 160, 0.3);
+  --ciamik-danger-hover:   var(--ciamik-red-600);
+
+  --ciamik-primary-bg:     rgba(var(--ciamik-primary-rgb), 0.15);
+  --ciamik-primary-text:   var(--ciamik-teal-300);
+  --ciamik-primary-border-hover: rgba(var(--ciamik-primary-rgb), 0.6);
+
+  --ciamik-skeleton-bg:      var(--ciamik-navy-800);
+  --ciamik-skeleton-shimmer: rgba(255, 255, 255, 0.05);
+
+  --ciamik-sidebar-bg:            var(--ciamik-navy-900);
+  --ciamik-sidebar-border:        rgba(255, 255, 255, 0.04);
 }

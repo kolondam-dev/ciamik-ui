@@ -1,0 +1,410 @@
+.card {
+  background-color: var(--ciamik-surface);
+  border: 1px solid var(--ciamik-border-faint);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: box-shadow var(--dur-base) var(--ease),
+              transform var(--dur-base) var(--ease),
+              border-color var(--dur-base) var(--ease);
+  position: relative;
+}
+
+.card:hover {
+  box-shadow: var(--sh-md);
+  transform: translateY(-2px);
+  border-color: var(--ciamik-border);
+}
+
+.pimg {
+  aspect-ratio: 1 / 1;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--ciamik-bg);
+  width: 100%;
+}
+
+.pimg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease);
+}
+
+.card:hover .pimg img {
+  transform: scale(1.03);
+}
+
+/* ── Badge placements ── */
+.badgeColTop {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 2;
+  align-items: flex-start;
+}
+
+.badgeColBottom {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 2;
+  align-items: flex-start;
+}
+
+.badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: var(--r-sm);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  box-shadow: var(--sh-sm);
+}
+
+/* Badge variants mapped semantically */
+.flash {
+  background-color: var(--ciamik-accent);
+  color: var(--ciamik-surface);
+}
+
+.discount {
+  background-color: var(--ciamik-highlight);
+  color: var(--ciamik-ink);
+}
+
+.free {
+  background-color: var(--ciamik-success-bg);
+  color: var(--ciamik-success-text);
+  border: 1px solid var(--ciamik-success-border);
+}
+
+.instant {
+  background-color: var(--ciamik-ink);
+  color: var(--ciamik-surface);
+}
+
+.terlaris {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background-color: var(--ciamik-ink);
+  color: var(--ciamik-surface);
+  z-index: 2;
+}
+
+.flameIcon {
+  color: var(--ciamik-accent);
+}
+
+.defaultBadge {
+  background-color: var(--ciamik-info-bg);
+  color: var(--ciamik-info-text);
+}
+
+/* ── Wishlist Heart Overlay ── */
+.heart {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: var(--ciamik-glass-bg);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ciamik-text-secondary);
+  border: 1px solid var(--ciamik-glass-border);
+  box-shadow: var(--sh-sm);
+  transition: transform var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease),
+              background-color var(--dur-fast) var(--ease);
+  cursor: pointer;
+  z-index: 2;
+  outline: none;
+}
+
+.heart:hover {
+  transform: scale(1.1);
+  background-color: var(--ciamik-surface);
+  color: var(--ciamik-ink);
+}
+
+.heart.liked {
+  color: var(--ciamik-danger);
+}
+
+/* ── Out of Stock ── */
+.oosOverlay {
+  position: absolute;
+  inset: 0;
+  background-color: var(--ciamik-overlay-bg);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ciamik-surface);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  z-index: 3;
+}
+
+/* ── Card Body ── */
+.pb {
+  padding: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.categoryRow {
+  margin-bottom: 6px;
+}
+
+.categoryLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--ciamik-primary);
+  letter-spacing: 0.04em;
+}
+
+.pn {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ciamik-ink);
+  line-height: 1.45;
+  height: 40px;
+  margin: 0 0 8px 0;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.pmeta {
+  font-size: 11px;
+  color: var(--ciamik-text-secondary);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.ratingText {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.starIcon {
+  color: var(--ciamik-highlight);
+}
+
+/* ── Stock status indicators ── */
+.stockLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+}
+
+.dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.stockOos {
+  color: var(--ciamik-danger-text);
+}
+.stockOos .dot {
+  background-color: var(--ciamik-danger);
+}
+
+.stockLow {
+  color: var(--ciamik-danger-text);
+  font-weight: 700;
+  animation: ciamik-pulse 2s infinite ease-in-out;
+}
+.stockLow .dot {
+  background-color: var(--ciamik-danger);
+}
+
+.stockAvailable {
+  color: var(--ciamik-success-text);
+}
+.stockAvailable .dot {
+  background-color: var(--ciamik-primary);
+}
+
+/* ── Price Section ── */
+.priceContainer {
+  margin-top: auto;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.pprice {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--ciamik-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.discountRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 2px;
+  line-height: 1.2;
+}
+
+.priceOld {
+  font-size: 12px;
+  color: var(--ciamik-text-tertiary);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+
+.discountBadge {
+  font-size: 10px;
+  color: var(--ciamik-danger-text);
+  font-weight: 700;
+  background-color: var(--ciamik-danger-bg);
+  padding: 1px 4px;
+  border-radius: var(--r-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── CTA area ── */
+.ctaArea {
+  margin-top: auto;
+}
+
+.ctaBtn {
+  width: 100%;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--ciamik-accent);
+  color: var(--ciamik-surface);
+  border: 1px solid transparent;
+  border-radius: var(--r-md);
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease),
+              transform var(--dur-fast) var(--ease),
+              border-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+  outline: none;
+}
+
+.ctaBtn:hover {
+  background-color: var(--ciamik-accent-press);
+}
+
+.ctaBtn:active {
+  transform: scale(0.98);
+}
+
+.notifyBtn {
+  background-color: var(--ciamik-primary);
+  color: var(--ciamik-surface);
+}
+
+.notifyBtn:hover {
+  background-color: var(--ciamik-primary-hover);
+}
+
+.wishlistedBtn {
+  background-color: var(--ciamik-primary-bg);
+  color: var(--ciamik-primary-text);
+  border-color: var(--ciamik-primary);
+}
+
+.wishlistedBtn:hover {
+  background-color: var(--ciamik-bg-hover);
+}
+
+/* ── Stepper ── */
+.stepper {
+  display: flex;
+  width: 100%;
+  height: 36px;
+  border: 1px solid var(--ciamik-accent);
+  border-radius: var(--r-md);
+  align-items: center;
+  overflow: hidden;
+  background-color: var(--ciamik-surface);
+}
+
+.stepper button {
+  width: 36px;
+  height: 100%;
+  background-color: var(--ciamik-primary-bg);
+  border: none;
+  color: var(--ciamik-primary-text);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+}
+
+.stepper button:hover {
+  background-color: var(--ciamik-bg-hover);
+}
+
+.stepper button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.qty {
+  flex: 1;
+  text-align: center;
+  font-size: 13.5px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ciamik-primary-text);
+  user-select: none;
+}
+
+@keyframes ciamik-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}

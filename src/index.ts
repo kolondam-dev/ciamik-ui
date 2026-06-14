@@ -9,8 +9,8 @@ export * from './primitives';
 // Tier 2 — Pattern Components
 export * from './patterns';
 
-// Tier 3 — Block Components (TBD in Phase 4)
-// export * from './blocks';
+// Tier 3 — Block Components
+export * from './blocks';
 
 // Hooks
 export * from './hooks';

@@ -4,7 +4,7 @@
   gap: var(--space-sm);
   padding: 12px var(--space-md);
   border-radius: var(--r-md);
-  background-color: rgba(255, 255, 255, 0.85); /* semi-transparent surface */
+  background-color: var(--ciamik-glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--ciamik-border);
@@ -22,9 +22,7 @@
 }
 
 :global(.dark) .toast {
-  background-color: rgba(27, 38, 79, 0.85); /* semi-transparent navy surface */
-  border-color: rgba(255, 255, 255, 0.08);
-  color: var(--ciamik-bg);
+  border-color: var(--ciamik-glass-border);
 }
 
 .icon {
@@ -56,12 +54,11 @@
 
 .closeBtn:hover {
   opacity: 1;
-  background-color: rgba(var(--ciamik-ink-rgb), 0.05);
+  background-color: var(--ciamik-bg-hover);
 }
 
 :global(.dark) .closeBtn:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-  color: var(--ciamik-bg);
+  background-color: var(--ciamik-bg-hover);
 }
 
 /* ── Semantic Icons ── */
@@ -70,11 +67,7 @@
 }
 
 .warningIcon {
-  color: var(--ciamik-warning-ink);
-}
-
-:global(.dark) .warningIcon {
-  color: var(--ciamik-warning);
+  color: var(--ciamik-warning-text);
 }
 
 .errorIcon {
@@ -82,7 +75,7 @@
 }
 
 .infoIcon {
-  color: var(--ciamik-navy-600);
+  color: var(--ciamik-info-text);
 }
 
 :global(.dark) .infoIcon {

@@ -1,0 +1,133 @@
+.cartItem {
+  display: flex;
+  gap: 12px;
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--ciamik-border-faint);
+  align-items: center;
+  background-color: transparent;
+  width: 100%;
+}
+
+.ciImg {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--ciamik-border-faint);
+  background-color: var(--ciamik-bg);
+  flex-shrink: 0;
+}
+
+.ciImg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ciInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0; /* allows text clamping inside flexbox */
+}
+
+.ciName {
+  font-family: inherit;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ciamik-ink);
+  margin: 0;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ciVariant {
+  font-size: 11px;
+  color: var(--ciamik-text-secondary);
+}
+
+.ciPrice {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ciamik-primary);
+  font-variant-numeric: tabular-nums;
+  margin-top: 2px;
+}
+
+.ciStepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--ciamik-border);
+  border-radius: var(--r-sm);
+  width: max-content;
+  height: 24px;
+  overflow: hidden;
+  margin-top: 4px;
+  background-color: var(--ciamik-surface);
+}
+
+.ciStepper button {
+  width: 24px;
+  height: 100%;
+  background-color: var(--ciamik-bg);
+  border: none;
+  color: var(--ciamik-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--dur-fast) var(--ease),
+              color var(--dur-fast) var(--ease);
+  outline: none;
+}
+
+.ciStepper button:hover:not(:disabled) {
+  background-color: var(--ciamik-bg-hover);
+  color: var(--ciamik-ink);
+}
+
+.ciStepper button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.qty {
+  min-width: 28px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ciamik-ink);
+  user-select: none;
+}
+
+.ciRemove {
+  background: transparent;
+  border: none;
+  color: var(--ciamik-text-secondary);
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  border-radius: var(--r-sm);
+  transition: color var(--dur-fast) var(--ease),
+              background-color var(--dur-fast) var(--ease),
+              transform var(--dur-fast) var(--ease);
+  outline: none;
+}
+
+.ciRemove:hover {
+  color: var(--ciamik-danger-text);
+  background-color: var(--ciamik-danger-bg);
+}
+
+.ciRemove:active {
+  transform: scale(0.9);
+}

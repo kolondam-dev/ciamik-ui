@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   height: 56px;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: var(--ciamik-glass-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid var(--ciamik-border-faint);
@@ -14,10 +14,6 @@
   /* iOS safe-area support */
   padding-bottom: env(safe-area-inset-bottom);
   height: calc(56px + env(safe-area-inset-bottom));
-}
-
-:global(.dark) .bottomNav {
-  background-color: rgba(27, 38, 79, 0.9);
 }
 
 .container {
@@ -50,10 +46,6 @@
 
 .activeBtn {
   color: var(--ciamik-primary);
-}
-
-:global(.dark) .activeBtn {
-  color: var(--ciamik-primary-hover);
 }
 
 .iconContainer {

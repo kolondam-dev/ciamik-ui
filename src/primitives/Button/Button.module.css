@@ -97,7 +97,7 @@
 }
 
 .danger:hover:not(:disabled) {
-  background-color: var(--ciamik-red-800);
+  background-color: var(--ciamik-danger-hover);
 }
 
 /* ── Loading Spinner ── */

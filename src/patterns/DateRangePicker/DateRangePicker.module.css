@@ -96,7 +96,7 @@
 }
 
 .activeItem {
-  background-color: rgba(var(--ciamik-primary-rgb), 0.06);
+  background-color: var(--ciamik-primary-bg);
   color: var(--ciamik-primary);
   font-weight: 700;
 }

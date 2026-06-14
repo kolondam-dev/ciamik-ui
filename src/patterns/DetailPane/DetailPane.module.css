@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(14, 20, 48, 0.4);
+  background-color: var(--ciamik-overlay-bg);
   backdrop-filter: blur(4px);
   z-index: 1030;
 }
@@ -59,13 +59,9 @@
   display: flex;
   align-items: center;
   gap: 2px;
-  background-color: var(--ciamik-navy-50);
+  background-color: var(--ciamik-bg);
   border-radius: var(--r-sm);
   padding: 2px;
-}
-
-:global(.dark) .navButtons {
-  background-color: var(--ciamik-navy-800);
 }
 
 .navBtn {
@@ -84,13 +80,8 @@
 }
 
 .navBtn:hover:not(:disabled) {
-  background-color: var(--ciamik-surface);
+  background-color: var(--ciamik-bg-hover);
   color: var(--ciamik-ink);
-}
-
-:global(.dark) .navBtn:hover:not(:disabled) {
-  background-color: var(--ciamik-navy-900);
-  color: var(--ciamik-bg);
 }
 
 .navBtn:disabled {
@@ -144,10 +135,6 @@
 
 .tabBtn:hover {
   color: var(--ciamik-ink);
-}
-
-:global(.dark) .tabBtn:hover {
-  color: var(--ciamik-bg);
 }
 
 .activeTabBtn {

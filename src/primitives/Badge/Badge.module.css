@@ -21,31 +21,31 @@
 
 /* ── Variants ── */
 .neutral {
-  background-color: var(--ciamik-navy-50);
-  color: var(--ciamik-navy-600);
+  background-color: var(--ciamik-info-bg);
+  color: var(--ciamik-info-text);
 }
 
 .success {
-  background-color: var(--ciamik-teal-50);
-  color: var(--ciamik-teal-600);
+  background-color: var(--ciamik-success-bg);
+  color: var(--ciamik-success-text);
 }
 
 .warning {
-  background-color: var(--ciamik-mustard-50);
-  color: var(--ciamik-mustard-800);
+  background-color: var(--ciamik-warning-bg);
+  color: var(--ciamik-warning-text);
 }
 
 .danger {
-  background-color: var(--ciamik-red-50);
-  color: var(--ciamik-red-800);
+  background-color: var(--ciamik-danger-bg);
+  color: var(--ciamik-danger-text);
 }
 
 .info {
-  background-color: rgba(31, 84, 83, 0.08); /* light teal tint */
-  color: var(--ciamik-primary-hover);
+  background-color: var(--ciamik-primary-bg);
+  color: var(--ciamik-primary-text);
 }
 
 .highlight {
-  background-color: var(--ciamik-coral-50);
-  color: var(--ciamik-coral-800);
+  background-color: var(--ciamik-highlight-bg);
+  color: var(--ciamik-highlight-text);
 }

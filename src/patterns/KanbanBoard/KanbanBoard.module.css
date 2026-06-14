@@ -11,7 +11,7 @@
   flex: 1;
   min-width: 250px;
   max-width: 320px;
-  background-color: var(--ciamik-navy-50);
+  background-color: var(--ciamik-bg);
   border: 1px solid var(--ciamik-border-faint);
   border-radius: var(--r-lg);
   display: flex;
@@ -21,16 +21,12 @@
   gap: var(--space-sm);
 }
 
-:global(.dark) .column {
-  background-color: var(--ciamik-navy-900);
-}
-
 .columnHeader {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: var(--space-xs) var(--space-sm);
-  border-bottom: 1px solid rgba(123, 130, 160, 0.15);
+  border-bottom: 1px solid var(--ciamik-border-faint);
 }
 
 .columnTitle {
@@ -39,10 +35,6 @@
   font-weight: 700;
   color: var(--ciamik-ink);
   margin: 0;
-}
-
-:global(.dark) .columnTitle {
-  color: var(--ciamik-bg);
 }
 
 .cardCount {
