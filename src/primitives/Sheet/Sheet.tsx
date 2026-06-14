@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useDragControls } from 'framer-motion';
 import { X } from '@phosphor-icons/react';
-import { cn } from '../../utils';
 import styles from './Sheet.module.css';
 
 export interface SheetProps {
@@ -37,7 +36,7 @@ export const Sheet: React.FC<SheetProps> = ({
 
   const sheetRoot = typeof document !== 'undefined' ? document.body : null;
 
-  const handleDragEnd = (event: any, info: any) => {
+  const handleDragEnd = (_: any, info: any) => {
     if (!isDismissible) return;
     // Close if dragged down more than 100px or speed is fast downwards
     if (info.offset.y > 100 || info.velocity.y > 500) {

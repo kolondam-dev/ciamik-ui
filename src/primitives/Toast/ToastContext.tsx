@@ -10,7 +10,7 @@ interface ToastItem {
   type: ToastType;
 }
 
-interface ToastContextValue {
+export interface ToastContextValue {
   toast: (message: string, type?: ToastType) => void;
 }
 
