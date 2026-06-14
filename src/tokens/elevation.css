@@ -1,0 +1,22 @@
+/* ====================================================================
+   CIAMIK Design System — Elevation Tokens
+   Flat-first. Shadow only for floating elements (dropdown, modal, toast).
+   Tint: navy-800 rgba(27,38,79,…) — bukan hitam.
+   ==================================================================== */
+
+:root {
+  /* ── Radius ── */
+  --r-xs:   2px;    /* detail kecil, inner element */
+  --r-sm:   4px;    /* badge persegi, tag */
+  --r-md:   6px;    /* DEFAULT kontrol: button, input, select */
+  --r-lg:   10px;   /* DEFAULT surface: card, panel */
+  --r-xl:   14px;   /* surface besar: modal, sheet, drawer */
+  --r-pill: 999px;  /* chip, badge-pill, avatar */
+
+  /* ── Shadow ── */
+  --sh-none: none;
+  --sh-sm:   0 1px 2px rgba(27, 38, 79, 0.04), 0 1px 3px rgba(27, 38, 79, 0.06);
+  --sh-md:   0 4px 8px -2px rgba(27, 38, 79, 0.06), 0 2px 4px -1px rgba(27, 38, 79, 0.05);
+  --sh-lg:   0 12px 24px -6px rgba(27, 38, 79, 0.10), 0 4px 8px -2px rgba(27, 38, 79, 0.06);
+  --sh-up:   0 -4px 12px rgba(27, 38, 79, 0.06);
+}

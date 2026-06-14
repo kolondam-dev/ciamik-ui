@@ -1,0 +1,20 @@
+/* ====================================================================
+   CIAMIK Design System — Layout Tokens
+   Container widths, z-index scale, grid defaults.
+   ==================================================================== */
+
+:root {
+  /* ── Container max-widths ── */
+  --container-max-storefront: 1280px;
+  --container-max-dashboard:  1536px;
+  --container-max-prose:      680px;
+
+  /* ── Z-index scale ── */
+  --z-base:     0;
+  --z-sticky:   10;
+  --z-dropdown: 20;
+  --z-overlay:  30;
+  --z-modal:    40;
+  --z-toast:    50;
+  --z-tooltip:  60;
+}

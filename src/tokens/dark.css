@@ -1,0 +1,21 @@
+/* ====================================================================
+   CIAMIK Design System — Dark Mode Overrides
+   Activated via .dark class on ancestor element.
+   ==================================================================== */
+
+.dark {
+  --ciamik-surface:        var(--ciamik-navy-800);
+  --ciamik-bg:             var(--ciamik-navy-900);
+  --ciamik-ink:            var(--ciamik-navy-50);
+  --ciamik-text-secondary: var(--ciamik-navy-200);
+  --ciamik-text-tertiary:  var(--ciamik-navy-400);
+  --ciamik-primary:        var(--ciamik-teal-300);
+  --ciamik-primary-hover:  var(--ciamik-teal-400);
+  --ciamik-border:         rgba(194, 198, 214, 0.20);
+  --ciamik-border-faint:   rgba(194, 198, 214, 0.12);
+
+  /* RGB helpers for dark mode */
+  --ciamik-primary-rgb:    91, 163, 160;
+  --ciamik-surface-rgb:    27, 38, 79;
+  --ciamik-ink-rgb:        237, 238, 243;
+}

@@ -1,0 +1,49 @@
+/* ====================================================================
+   CIAMIK Design System — Primitive Tokens (Layer 1)
+   JANGAN pakai langsung di komponen. Gunakan Semantic tokens (Layer 2).
+   ==================================================================== */
+
+:root {
+  /* ── Teal (primary ramp) ── */
+  --ciamik-teal-50:  #E9F2F1;
+  --ciamik-teal-100: #A9D0CE;
+  --ciamik-teal-300: #5BA3A0;
+  --ciamik-teal-400: #2F7A78;
+  --ciamik-teal-600: #1F5453;
+  --ciamik-teal-900: #123230;
+
+  /* ── Coral (accent ramp) ── */
+  --ciamik-coral-50:  #FFEEE6;
+  --ciamik-coral-200: #FFA47A;
+  --ciamik-coral-400: #FF7F50;
+  --ciamik-coral-600: #C75A30;
+  --ciamik-coral-800: #8A3C1D;
+
+  /* ── Mustard (highlight ramp) ── */
+  --ciamik-mustard-50:  #FBF1D8;
+  --ciamik-mustard-300: #E0B948;
+  --ciamik-mustard-400: #D4A017;
+  --ciamik-mustard-600: #9E7710;
+  --ciamik-mustard-800: #654C0A;
+
+  /* ── Navy (ink + dark surface ramp) ── */
+  --ciamik-navy-50:  #EDEEF3;
+  --ciamik-navy-200: #C2C6D6;
+  --ciamik-navy-400: #7B82A0;
+  --ciamik-navy-600: #3D4870;
+  --ciamik-navy-800: #1B264F;
+  --ciamik-navy-900: #0E1430;
+
+  /* ── Red (danger — terpisah dari coral agar CTA tidak bentrok) ── */
+  --ciamik-red-50:  #FCEBEB;
+  --ciamik-red-400: #E24B4A;
+  --ciamik-red-600: #C0392B;
+  --ciamik-red-800: #791F1F;
+
+  /* ── RGB helpers (untuk rgba() opacity variants) ── */
+  --ciamik-primary-rgb: 47, 122, 120;
+  --ciamik-accent-rgb: 255, 127, 80;
+  --ciamik-surface-rgb: 255, 255, 255;
+  --ciamik-ink-rgb: 27, 38, 79;
+  --ciamik-danger-rgb: 192, 57, 43;
+}

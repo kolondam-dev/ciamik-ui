@@ -1,0 +1,37 @@
+/* ====================================================================
+   CIAMIK Design System — Semantic Tokens (Layer 2)
+   Komponen HANYA boleh pakai token ini atau Brand token (Layer 3).
+   ==================================================================== */
+
+:root {
+  /* ── Color Roles ── */
+  --ciamik-primary:        var(--ciamik-teal-400);
+  --ciamik-primary-hover:  var(--ciamik-teal-600);
+  --ciamik-accent:         var(--ciamik-coral-400);
+  --ciamik-accent-press:   var(--ciamik-coral-600);
+  --ciamik-highlight:      var(--ciamik-mustard-400);
+
+  /* ── Text ── */
+  --ciamik-ink:            var(--ciamik-navy-800);
+  --ciamik-text-secondary: var(--ciamik-navy-400);
+  --ciamik-text-tertiary:  var(--ciamik-navy-200);
+
+  /* ── Status ── */
+  --ciamik-success:        var(--ciamik-teal-400);
+  --ciamik-success-ink:    var(--ciamik-teal-600);
+  --ciamik-warning:        var(--ciamik-mustard-400);
+  --ciamik-warning-ink:    var(--ciamik-mustard-800);
+  --ciamik-danger:         var(--ciamik-red-600);
+  --ciamik-info:           var(--ciamik-navy-600);
+
+  /* ── Surface ── */
+  --ciamik-surface:        #FFFFFF;
+  --ciamik-bg:             var(--ciamik-navy-50);
+
+  /* ── Border ── */
+  --ciamik-border:         rgba(123, 130, 160, 0.30);
+  --ciamik-border-faint:   rgba(123, 130, 160, 0.18);
+
+  /* ── Focus Ring ── */
+  --ciamik-focus-ring:     0 0 0 3px rgba(var(--ciamik-primary-rgb), 0.15);
+}

@@ -1,0 +1,14 @@
+/* ====================================================================
+   CIAMIK Design System — Token Barrel
+   Import order matters: primitives → semantic → dark → scale → reset
+   ==================================================================== */
+
+@import './primitives.css';
+@import './semantic.css';
+@import './dark.css';
+@import './spacing.css';
+@import './typography.css';
+@import './elevation.css';
+@import './motion.css';
+@import './layout.css';
+@import './reset.css';

@@ -1,0 +1,78 @@
+/* ====================================================================
+   CIAMIK Design System — Global Reset & Base Styles
+   Applied once when consumer imports @ciamik/ui/style.css
+   ==================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background: var(--ciamik-bg);
+  color: var(--ciamik-ink);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background var(--dur-base), color var(--dur-base);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button {
+  font-family: var(--font-family);
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+input, select, textarea {
+  font-family: var(--font-family);
+}
+
+/* ── Utility: Tabular numbers for prices & quantities ── */
+.ciamik-tabnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Utility: Hide scrollbar ── */
+.ciamik-no-scrollbar::-webkit-scrollbar { display: none; }
+.ciamik-no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Utility: Screen-reader only ── */
+.ciamik-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
