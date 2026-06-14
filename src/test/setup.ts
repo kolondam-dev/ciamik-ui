@@ -15,3 +15,8 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
+if (typeof window !== 'undefined' && !window.PointerEvent) {
+  // @ts-ignore
+  window.PointerEvent = class PointerEvent extends MouseEvent {};
+}
+
