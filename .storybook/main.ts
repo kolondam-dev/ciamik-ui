@@ -15,6 +15,13 @@ const config: StorybookConfig = {
     options: {},
   },
   viteFinal: async (config) => {
+    config.optimizeDeps = {
+      ...(config.optimizeDeps || {}),
+      include: [
+        ...(config.optimizeDeps?.include || []),
+        '@phosphor-icons/react',
+      ],
+    };
     return config;
   },
 };
