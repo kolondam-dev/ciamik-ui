@@ -28,19 +28,21 @@
   border-bottom: none;
   box-shadow: var(--sh-lg);
   width: 100%;
-  max-width: 540px; /* limits width on desktop, full on mobile */
+  max-width: 540px;
   display: flex;
   flex-direction: column;
   z-index: 1060;
-  max-height: 85vh;
+  height: 85vh; /* max height = full snap */
   touch-action: none;
+  will-change: transform;
 }
 
+/* ── Drag Handle ── */
 .handleContainer {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 24px;
+  height: 28px;
   width: 100%;
   flex-shrink: 0;
   user-select: none;
@@ -51,10 +53,43 @@
   height: 5px;
   border-radius: var(--r-pill);
   background-color: var(--ciamik-text-tertiary);
+  transition: width var(--dur-fast) var(--ease),
+              background-color var(--dur-fast) var(--ease);
+}
+
+.handleContainer:active .handle {
+  width: 48px;
+  background-color: var(--ciamik-text-secondary);
 }
 
 :global(.dark) .handle {
   background-color: var(--ciamik-text-secondary);
+}
+
+/* ── Snap Indicator Dots ── */
+.snapIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding-bottom: 4px;
+}
+
+.snapDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background-color: var(--ciamik-border);
+  transition: all var(--dur-fast) var(--ease);
+}
+
+.snapDotActive {
+  background-color: var(--ciamik-primary);
+  width: 16px;
+  border-radius: var(--r-pill);
 }
 
 /* ── Header ── */
@@ -99,9 +134,12 @@
 .body {
   padding: var(--space-lg);
   overflow-y: auto;
+  flex: 1;
   font-family: inherit;
   font-size: 14px;
   line-height: 1.5;
   color: var(--ciamik-text-secondary);
-  touch-action: pan-y; /* allow scrolling inside body */
+  touch-action: pan-y;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
 }

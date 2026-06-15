@@ -374,3 +374,232 @@ export function FulfillmentBoard() {
   );
 }
 ```
+
+---
+
+## 🗺️ 7. Storefront: Desktop Layout & Cascading Address Flow
+
+Panduan untuk mengimplementasikan layout storefront responsif (Mobile vs Desktop) dan Right Sidebar Drawer adaptif, serta formulir pengisian alamat dengan Region Selector berjenjang (Provinsi -> Kota -> Kecamatan -> Kelurahan).
+
+### A. Right Sidebar Drawer Adaptif (`StorefrontDrawer`)
+
+Component `StorefrontDrawer` secara dinamis berubah fungsi menjadi Bottom Sheet di mobile viewport dan Right Drawer di desktop viewport (`min-width: 1024px`).
+
+```tsx
+import { useState } from 'react';
+import { useMediaQuery, Sheet, Button } from '@ciamik/ui';
+import { AnimatePresence, motion } from 'framer-motion';
+import { X } from '@phosphor-icons/react';
+
+// Wrapper Drawer Adaptif
+export const StorefrontDrawer = ({
+  isOpen,
+  onClose,
+  title,
+  children
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
+  children: React.ReactNode;
+}) => {
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
+
+  if (isDesktop) {
+    return (
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop dengan blur */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.4 }}
+              exit={{ opacity: 0 }}
+              onClick={onClose}
+              style={{
+                position: 'fixed',
+                top: 0, left: 0, right: 0, bottom: 0,
+                backgroundColor: '#000',
+                backdropFilter: 'blur(4px)',
+                zIndex: 990,
+              }}
+            />
+            {/* Right Drawer */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 220 }}
+              style={{
+                position: 'fixed',
+                top: 0, right: 0, bottom: 0,
+                width: '100%', maxWidth: 400,
+                backgroundColor: 'var(--ciamik-surface)',
+                boxShadow: 'var(--sh-lg)',
+                borderLeft: '1px solid var(--ciamik-border-faint)',
+                zIndex: 1000,
+                display: 'flex', flexDirection: 'column',
+                overflow: 'hidden',
+              }}
+            >
+              {/* Header */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', borderBottom: '1px solid var(--ciamik-border-faint)' }}>
+                <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--ciamik-ink)' }}>{title}</span>
+                <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--ciamik-text-secondary)' }}>
+                  <X size={20} weight="bold" />
+                </button>
+              </div>
+              {/* Content */}
+              <div style={{ flex: 1, overflowY: 'auto', padding: 20 }}>
+                {children}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    );
+  }
+
+  // Fallback ke Bottom Sheet di Mobile
+  return (
+    <Sheet isOpen={isOpen} onClose={onClose} title={title}>
+      {children}
+    </Sheet>
+  );
+};
+```
+
+### B. Cascading Region Selector & Address Form
+
+Berikut adalah cara menyusun state dan logika untuk region selector berjenjang yang menyaring data Provinsi -> Kota -> Kecamatan -> Kelurahan, serta mempopulasi Kode Pos secara otomatis.
+
+```tsx
+import { useState } from 'react';
+import { useToast, Button, Input } from '@ciamik/ui';
+import { CaretRight, MagnifyingGlass } from '@phosphor-icons/react';
+
+// Database Mock Wilayah
+const REGION_DATABASE = {
+  'DKI Jakarta': {
+    'Jakarta Pusat': {
+      'Menteng': { 'Menteng': '10310', 'Cikini': '10330' }
+    }
+  },
+  'Jawa Barat': {
+    'Bandung': {
+      'Coblong': { 'Dago': '40135', 'Sekeloa': '40134' }
+    }
+  }
+};
+
+export function AddressFormFlow() {
+  const { toast } = useToast();
+  const [view, setView] = useState<'form' | 'picker'>('form');
+  const [pickerLevel, setPickerLevel] = useState<'provinsi' | 'kota' | 'kecamatan' | 'kelurahan'>('provinsi');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Form States
+  const [provinsi, setProvinsi] = useState('');
+  const [kota, setKota] = useState('');
+  const [kecamatan, setKecamatan] = useState('');
+  const [kelurahan, setKelurahan] = useState('');
+  const [postalCode, setPostalCode] = useState('');
+
+  // Menghitung opsi yang tersedia berdasarkan pilihan sebelumnya
+  const getOptions = () => {
+    if (pickerLevel === 'provinsi') return Object.keys(REGION_DATABASE);
+    if (pickerLevel === 'kota') return provinsi ? Object.keys((REGION_DATABASE as any)[provinsi] || {}) : [];
+    if (pickerLevel === 'kecamatan') return (provinsi && kota) ? Object.keys((REGION_DATABASE as any)[provinsi]?.[kota] || {}) : [];
+    if (pickerLevel === 'kelurahan') return (provinsi && kota && kecamatan) ? Object.keys((REGION_DATABASE as any)[provinsi]?.[kota]?.[kecamatan] || {}) : [];
+    return [];
+  };
+
+  const handleSelectOption = (opt: string) => {
+    if (pickerLevel === 'provinsi') {
+      setProvinsi(opt); setKota(''); setKecamatan(''); setKelurahan(''); setPostalCode('');
+      setPickerLevel('kota');
+    } else if (pickerLevel === 'kota') {
+      setKota(opt); setKecamatan(''); setKelurahan(''); setPostalCode('');
+      setPickerLevel('kecamatan');
+    } else if (pickerLevel === 'kecamatan') {
+      setKecamatan(opt); setKelurahan(''); setPostalCode('');
+      setPickerLevel('kelurahan');
+    } else if (pickerLevel === 'kelurahan') {
+      setKelurahan(opt);
+      const code = (REGION_DATABASE as any)[provinsi]?.[kota]?.[kecamatan]?.[opt] || '';
+      setPostalCode(code);
+      setView('form'); // Kembali ke form utama
+    }
+    setSearchQuery('');
+  };
+
+  const options = getOptions().filter(o => o.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  return (
+    <div style={{ padding: 16, maxWidth: 400, backgroundColor: 'var(--ciamik-surface)', borderRadius: 'var(--r-lg)' }}>
+      {view === 'form' ? (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+          <h3>Formulir Alamat</h3>
+          
+          <div>
+            <label style={{ fontSize: 12, fontWeight: 700, display: 'block', marginBottom: 6 }}>Wilayah</label>
+            <div
+              onClick={() => { setPickerLevel('provinsi'); setView('picker'); }}
+              style={{ padding: 12, border: '1px solid var(--ciamik-border)', borderRadius: 'var(--r-md)', cursor: 'pointer', display: 'flex', justifyContent: 'space-between' }}
+            >
+              <span>{provinsi ? `${provinsi}, ${kota}, ${kecamatan}, ${kelurahan}` : 'Pilih Wilayah...'}</span>
+              <CaretRight size={16} />
+            </div>
+          </div>
+
+          <div>
+            <label style={{ fontSize: 12, fontWeight: 700, display: 'block', marginBottom: 6 }}>Kode Pos</label>
+            <Input readOnly value={postalCode} placeholder="Kode pos terisi otomatis" />
+          </div>
+
+          <Button variant="primary" onClick={() => toast('Alamat berhasil disimpan!', 'success')}>
+            Simpan Alamat
+          </Button>
+        </div>
+      ) : (
+        <div>
+          <h3>Pilih {pickerLevel}</h3>
+          
+          {/* Input Search */}
+          <div style={{ display: 'flex', gap: 8, padding: 8, border: '1px solid var(--ciamik-border)', borderRadius: 'var(--r-md)', marginBottom: 12 }}>
+            <MagnifyingGlass size={18} />
+            <input
+              type="text"
+              placeholder={`Cari ${pickerLevel}...`}
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              style={{ border: 'none', width: '100%', outline: 'none', background: 'transparent' }}
+            />
+          </div>
+
+          {/* Breadcrumbs */}
+          <div style={{ display: 'flex', gap: 8, fontSize: 12, color: 'var(--ciamik-text-secondary)', marginBottom: 16 }}>
+            <span style={{ cursor: 'pointer', fontWeight: pickerLevel === 'provinsi' ? 700 : 500 }} onClick={() => setPickerLevel('provinsi')}>Provinsi</span>
+            {provinsi && <span onClick={() => setPickerLevel('kota')}>&gt; {provinsi}</span>}
+            {kota && <span onClick={() => setPickerLevel('kecamatan')}>&gt; {kota}</span>}
+          </div>
+
+          {/* Options List */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {options.map(opt => (
+              <div
+                key={opt}
+                onClick={() => handleSelectOption(opt)}
+                style={{ padding: 12, border: '1px solid var(--ciamik-border-faint)', borderRadius: 'var(--r-md)', cursor: 'pointer', display: 'flex', justifyContent: 'space-between' }}
+              >
+                <span>{opt}</span>
+                <CaretRight size={14} />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+```

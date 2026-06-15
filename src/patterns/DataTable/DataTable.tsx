@@ -26,6 +26,7 @@ export interface DataTableProps<T> {
   loading?: boolean;
   emptyState?: React.ReactNode;
   rowActions?: (row: T) => React.ReactNode;
+  onRowClick?: (row: T) => void;
 }
 
 export function DataTable<T>({
@@ -42,10 +43,27 @@ export function DataTable<T>({
   loading = false,
   emptyState,
   rowActions,
+  onRowClick,
 }: DataTableProps<T>) {
   const allRowKeys = data.map(keyExtractor);
   const isAllSelected = data.length > 0 && allRowKeys.every((k) => selectedKeys.includes(k));
   const isSomeSelected = data.length > 0 && selectedKeys.length > 0 && !isAllSelected;
+
+  const handleRowClick = (e: React.MouseEvent, row: T) => {
+    const target = e.target as HTMLElement;
+    if (
+      target.closest(`.${styles.checkboxCol}`) ||
+      target.closest(`.${styles.actionsCol}`) ||
+      target.closest('input') ||
+      target.closest('button') ||
+      target.closest('a')
+    ) {
+      return;
+    }
+    if (onRowClick) {
+      onRowClick(row);
+    }
+  };
 
   const handleSelectAllToggle = () => {
     if (!onSelectKeysChange) return;
@@ -94,7 +112,7 @@ export function DataTable<T>({
 
       {/* Table Wrapper */}
       <div className={styles.tableWrapper}>
-        <table className={styles.table}>
+        <table className={cn(styles.table, 'ciamik-data-table')} data-testid="data-table">
           <thead>
             <tr>
               {selectable && (
@@ -171,7 +189,8 @@ export function DataTable<T>({
                 return (
                   <tr
                     key={key}
-                    className={cn(styles.tr, isSelected && styles.selectedRow)}
+                    className={cn(styles.tr, isSelected && styles.selectedRow, onRowClick && styles.clickableRow)}
+                    onClick={(e) => handleRowClick(e, row)}
                   >
                     {selectable && (
                       <td className={cn(styles.td, styles.checkboxCol)}>

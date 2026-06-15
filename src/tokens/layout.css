@@ -18,3 +18,29 @@
   --z-toast:    50;
   --z-tooltip:  60;
 }
+
+/* ── Global Loading Bar ── */
+#loading-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 9999;
+  display: none;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--ciamik-teal-300) 30%,
+    var(--ciamik-teal-400) 60%,
+    transparent 100%
+  );
+  background-size: 400% 100%;
+  animation: loading-slide 1.4s ease-in-out infinite;
+}
+#loading-bar.active {
+  display: block;
+}
+
+@keyframes loading-slide {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+

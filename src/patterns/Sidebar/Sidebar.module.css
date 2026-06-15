@@ -10,8 +10,9 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 100;
   box-shadow: var(--sh-md);
+  overflow-x: hidden;
 }
 
 .expanded {
@@ -175,7 +176,7 @@
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   .sidebar {
     transform: translateX(-100%);
     width: 240px !important;

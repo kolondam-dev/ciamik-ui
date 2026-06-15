@@ -82,6 +82,10 @@
   background-color: rgba(var(--ciamik-primary-rgb), 0.08);
 }
 
+.clickableRow {
+  cursor: pointer;
+}
+
 /* ── Alignment ── */
 .left {
   text-align: left;

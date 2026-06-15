@@ -3,6 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { CartItem } from '../../src/blocks/CartItem/CartItem';
 import { OTPFlow } from '../../src/blocks/OTPFlow/OTPFlow';
 import { TrustBadges } from '../../src/blocks/TrustBadges/TrustBadges';
+import { CheckCircle } from '@phosphor-icons/react';
 
 const initialCartItems = [
   {
@@ -26,6 +27,8 @@ const initialCartItems = [
 const CheckoutPage = () => {
   const [items, setItems] = useState(initialCartItems);
   const [showOTP, setShowOTP] = useState(false);
+  const [selectedCourier, setSelectedCourier] = useState<'reg' | 'exp'>('reg');
+  const [selectedPayment, setSelectedPayment] = useState<'bca' | 'gopay'>('bca');
 
   const handleQtyChange = (id: string, newQty: number) => {
     setItems((prev) => prev.map((item) => item.id === id ? { ...item, quantity: newQty } : item));
@@ -38,7 +41,7 @@ const CheckoutPage = () => {
   const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <div style={{ maxWidth: 480, margin: '0 auto', backgroundColor: 'var(--ciamik-bg)', minHeight: '100vh' }}>
+    <div style={{ maxWidth: 480, margin: '0 auto', backgroundColor: 'var(--ciamik-bg)', minHeight: '100vh', overscrollBehaviorY: 'contain' }}>
       {/* Topbar */}
       <div style={{
         padding: '12px 16px', backgroundColor: 'var(--ciamik-surface)',
@@ -106,17 +109,92 @@ const CheckoutPage = () => {
             margin: '12px 16px', padding: 16, backgroundColor: 'var(--ciamik-surface)',
             borderRadius: 'var(--r-lg)', border: '1px solid var(--ciamik-border-faint)',
           }}>
-            <h3 style={{ font: 'var(--text-h3)', color: 'var(--ciamik-ink)', marginBottom: 12 }}>🚚 Pengiriman</h3>
-            {['Reguler (Rp 15.000) — 3-5 hari', 'Express (Rp 25.000) — 1-2 hari'].map((option, idx) => (
-              <label key={idx} style={{
-                display: 'flex', alignItems: 'center', gap: 10, padding: '10px 0',
-                borderBottom: idx === 0 ? '1px solid var(--ciamik-border-faint)' : 'none',
-                font: 'var(--text-small)', color: 'var(--ciamik-ink)', cursor: 'pointer',
-              }}>
-                <input type="radio" name="courier" defaultChecked={idx === 0} />
-                {option}
-              </label>
-            ))}
+            <h3 style={{ font: 'var(--text-h3)', color: 'var(--ciamik-ink)', marginBottom: 12 }}>🚚 Pilihan Kurir</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              {[
+                { id: 'reg', name: 'JNE Reguler', price: 15000, desc: 'Estimasi 3-5 hari' },
+                { id: 'exp', name: 'SiCepat Express', price: 25000, desc: 'Estimasi 1-2 hari' },
+              ].map((c) => {
+                const isSelected = selectedCourier === c.id;
+                return (
+                  <div
+                    key={c.id}
+                    onClick={() => setSelectedCourier(c.id as 'reg' | 'exp')}
+                    style={{
+                      padding: 12,
+                      borderRadius: 6,
+                      border: isSelected ? '1.5px solid var(--ciamik-primary)' : '1px solid var(--ciamik-border)',
+                      backgroundColor: isSelected ? 'rgba(47, 122, 120, 0.04)' : 'var(--ciamik-surface)',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 4,
+                      transition: 'all var(--dur-fast) var(--ease)',
+                    }}
+                  >
+                    {isSelected && (
+                      <CheckCircle
+                        size={16}
+                        weight="fill"
+                        color="var(--ciamik-primary)"
+                        style={{ position: 'absolute', top: 8, right: 8 }}
+                      />
+                    )}
+                    <span style={{ font: 'var(--text-small)', fontWeight: 700, color: 'var(--ciamik-ink)' }}>{c.name}</span>
+                    <span style={{ fontSize: 11, color: 'var(--ciamik-text-secondary)' }}>{c.desc}</span>
+                    <span style={{ font: 'var(--text-small)', fontWeight: 600, color: 'var(--ciamik-primary)', marginTop: 4 }}>
+                      Rp {c.price.toLocaleString('id-ID')}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Payment Method */}
+          <div style={{
+            margin: '12px 16px', padding: 16, backgroundColor: 'var(--ciamik-surface)',
+            borderRadius: 'var(--r-lg)', border: '1px solid var(--ciamik-border-faint)',
+          }}>
+            <h3 style={{ font: 'var(--text-h3)', color: 'var(--ciamik-ink)', marginBottom: 12 }}>💳 Metode Pembayaran</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              {[
+                { id: 'bca', name: 'BCA Virtual Account', desc: 'Verifikasi Otomatis' },
+                { id: 'gopay', name: 'GoPay / QRIS', desc: 'Scan e-Wallet' },
+              ].map((p) => {
+                const isSelected = selectedPayment === p.id;
+                return (
+                  <div
+                    key={p.id}
+                    onClick={() => setSelectedPayment(p.id as 'bca' | 'gopay')}
+                    style={{
+                      padding: 12,
+                      borderRadius: 6,
+                      border: isSelected ? '1.5px solid var(--ciamik-primary)' : '1px solid var(--ciamik-border)',
+                      backgroundColor: isSelected ? 'rgba(47, 122, 120, 0.04)' : 'var(--ciamik-surface)',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: 4,
+                      transition: 'all var(--dur-fast) var(--ease)',
+                    }}
+                  >
+                    {isSelected && (
+                      <CheckCircle
+                        size={16}
+                        weight="fill"
+                        color="var(--ciamik-primary)"
+                        style={{ position: 'absolute', top: 8, right: 8 }}
+                      />
+                    )}
+                    <span style={{ font: 'var(--text-small)', fontWeight: 700, color: 'var(--ciamik-ink)' }}>{p.name}</span>
+                    <span style={{ fontSize: 11, color: 'var(--ciamik-text-secondary)' }}>{p.desc}</span>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Summary & CTA */}
@@ -129,11 +207,11 @@ const CheckoutPage = () => {
               <span>Subtotal</span><span className="tabnum">Rp {subtotal.toLocaleString('id-ID')}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', font: 'var(--text-small)', color: 'var(--ciamik-text-secondary)', marginBottom: 8 }}>
-              <span>Ongkos Kirim</span><span className="tabnum">Rp 15.000</span>
+              <span>Ongkos Kirim</span><span className="tabnum">Rp {(selectedCourier === 'reg' ? 15000 : 25000).toLocaleString('id-ID')}</span>
             </div>
             <hr style={{ border: 'none', borderTop: '1px solid var(--ciamik-border-faint)', margin: '8px 0' }} />
             <div style={{ display: 'flex', justifyContent: 'space-between', font: 'var(--text-h3)', color: 'var(--ciamik-ink)' }}>
-              <span>Total</span><span className="tabnum">Rp {(subtotal + 15000).toLocaleString('id-ID')}</span>
+              <span>Total</span><span className="tabnum">Rp {(subtotal + (selectedCourier === 'reg' ? 15000 : 25000)).toLocaleString('id-ID')}</span>
             </div>
           </div>
 
@@ -145,6 +223,7 @@ const CheckoutPage = () => {
           <div style={{
             position: 'sticky', bottom: 0, padding: '12px 16px',
             backgroundColor: 'var(--ciamik-surface)', borderTop: '1px solid var(--ciamik-border-faint)',
+            zIndex: 10,
           }}>
             <button
               onClick={() => setShowOTP(true)}
@@ -154,7 +233,7 @@ const CheckoutPage = () => {
                 font: 'var(--text-h3)', fontWeight: 700, cursor: 'pointer',
               }}
             >
-              Bayar Sekarang — Rp {(subtotal + 15000).toLocaleString('id-ID')}
+              Bayar Sekarang — Rp {(subtotal + (selectedCourier === 'reg' ? 15000 : 25000)).toLocaleString('id-ID')}
             </button>
           </div>
         </>

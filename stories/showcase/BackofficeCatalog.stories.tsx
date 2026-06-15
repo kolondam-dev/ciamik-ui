@@ -10,6 +10,7 @@ import { Select } from '../../src/primitives/Select/Select';
 import { Button } from '../../src/primitives/Button/Button';
 import { Badge } from '../../src/primitives/Badge/Badge';
 import { useToast } from '../../src/hooks/useToast';
+import { useMediaQuery } from '../../src/hooks/useMediaQuery';
 import {
   House,
   ShoppingCart,
@@ -17,7 +18,6 @@ import {
   Tag,
   ChartBar,
   Gear,
-  PencilSimple,
   Plus,
 } from '@phosphor-icons/react';
 
@@ -25,17 +25,17 @@ const sidebarGroups = [
   {
     title: 'Menu Utama',
     items: [
-      { key: 'dashboard', label: 'Dashboard', icon: <House size={18} /> },
-      { key: 'orders', label: 'Pesanan', icon: <ShoppingCart size={18} /> },
-      { key: 'fulfillment', label: 'Fulfillment', icon: <Truck size={18} /> },
-      { key: 'catalog', label: 'Katalog', icon: <Tag size={18} />, isActive: true },
+      { key: 'dashboard', label: 'Dashboard', icon: <House size={18} weight="duotone" /> },
+      { key: 'orders', label: 'Pesanan', icon: <ShoppingCart size={18} weight="duotone" /> },
+      { key: 'fulfillment', label: 'Fulfillment', icon: <Truck size={18} weight="duotone" /> },
+      { key: 'catalog', label: 'Katalog', icon: <Tag size={18} weight="duotone" />, isActive: true },
     ],
   },
   {
     title: 'Lainnya',
     items: [
-      { key: 'reports', label: 'Laporan', icon: <ChartBar size={18} /> },
-      { key: 'settings', label: 'Pengaturan', icon: <Gear size={18} /> },
+      { key: 'reports', label: 'Laporan', icon: <ChartBar size={18} weight="duotone" /> },
+      { key: 'settings', label: 'Pengaturan', icon: <Gear size={18} weight="duotone" /> },
     ],
   },
 ];
@@ -105,6 +105,7 @@ const filterOptions = [
 const CatalogShowcase = () => {
   const { toast } = useToast();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
   const [products, setProducts] = useState(initialProducts);
   const [searchValue, setSearchValue] = useState('');
   const [activeFilter, setActiveFilter] = useState('all');
@@ -214,7 +215,13 @@ const CatalogShowcase = () => {
       />
 
       {/* Main Content */}
-      <div style={{ flex: 1, overflow: 'auto', padding: 24 }}>
+      <div style={{
+        flex: 1,
+        overflow: 'auto',
+        padding: 24,
+        transition: 'margin-left 0.3s ease',
+        marginLeft: isDesktop ? (isCollapsed ? 64 : 240) : 0,
+      }}>
         {/* Title & Actions */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 24 }}>
           <div>
@@ -286,23 +293,11 @@ const CatalogShowcase = () => {
                 );
               },
             },
-            {
-              key: 'action',
-              label: 'Aksi',
-              render: (row) => (
-                <Button
-                  variant="ghost"
-                  onClick={() => openEditModal(row)}
-                  style={{ padding: 6, minWidth: 'auto' }}
-                >
-                  <PencilSimple size={16} />
-                </Button>
-              ),
-            },
           ]}
           data={filteredProducts}
           keyExtractor={(row) => row.id.toString()}
           selectable
+          onRowClick={(row) => openEditModal(row)}
         />
       </div>
 

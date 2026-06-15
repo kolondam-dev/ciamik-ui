@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CiamikProvider } from '../../src/provider/CiamikProvider';
 import { Sidebar } from '../../src/patterns/Sidebar/Sidebar';
@@ -7,7 +7,10 @@ import { DetailPane } from '../../src/patterns/DetailPane/DetailPane';
 import { StatusBadge } from '../../src/patterns/StatusBadge/StatusBadge';
 import { Button } from '../../src/primitives/Button/Button';
 import { Card } from '../../src/primitives/Card/Card';
+import { ViewSwitcher } from '../../src/patterns/ViewSwitcher/ViewSwitcher';
+import { DataTable } from '../../src/patterns/DataTable/DataTable';
 import { useToast } from '../../src/hooks/useToast';
+import { useMediaQuery } from '../../src/hooks/useMediaQuery';
 import {
   House,
   ShoppingCart,
@@ -18,23 +21,24 @@ import {
   User,
   MapPin,
   Barcode,
+  Columns,
 } from '@phosphor-icons/react';
 
 const sidebarGroups = [
   {
     title: 'Menu Utama',
     items: [
-      { key: 'dashboard', label: 'Dashboard', icon: <House size={18} /> },
-      { key: 'orders', label: 'Pesanan', icon: <ShoppingCart size={18} /> },
-      { key: 'fulfillment', label: 'Fulfillment', icon: <Truck size={18} />, isActive: true },
-      { key: 'catalog', label: 'Katalog', icon: <Tag size={18} /> },
+      { key: 'dashboard', label: 'Dashboard', icon: <House size={18} weight="duotone" /> },
+      { key: 'orders', label: 'Pesanan', icon: <ShoppingCart size={18} weight="duotone" /> },
+      { key: 'fulfillment', label: 'Fulfillment', icon: <Truck size={18} weight="duotone" />, isActive: true },
+      { key: 'catalog', label: 'Katalog', icon: <Tag size={18} weight="duotone" /> },
     ],
   },
   {
     title: 'Lainnya',
     items: [
-      { key: 'reports', label: 'Laporan', icon: <ChartBar size={18} /> },
-      { key: 'settings', label: 'Pengaturan', icon: <Gear size={18} /> },
+      { key: 'reports', label: 'Laporan', icon: <ChartBar size={18} weight="duotone" /> },
+      { key: 'settings', label: 'Pengaturan', icon: <Gear size={18} weight="duotone" /> },
     ],
   },
 ];
@@ -74,8 +78,18 @@ const initialColumns: KanbanColumnType[] = [
 const FulfillmentShowcase = () => {
   const { toast } = useToast();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const isDesktop = useMediaQuery('(min-width: 1024px)');
   const [columns, setColumns] = useState<KanbanColumnType[]>(initialColumns);
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
+
+  // View & Column selector states
+  const [activeView, setActiveView] = useState<string>('kanban');
+  const [visibleKanbanCols, setVisibleKanbanCols] = useState<string[]>(['PAID', 'PROCESSING', 'PACKED', 'SHIPPED']);
+  const [isColumnSelectorOpen, setIsColumnSelectorOpen] = useState(false);
+
+  // Sorting States
+  const [sortKey, setSortKey] = useState<string>('date');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
 
   // Linear progression order: PAID -> PROCESSING -> PACKED -> SHIPPED
   const columnOrder = ['PAID', 'PROCESSING', 'PACKED', 'SHIPPED'];
@@ -123,6 +137,58 @@ const FulfillmentShowcase = () => {
       toast(`Status pesanan ${cardId} diperbarui ke ${toColumnId.replace('_', ' ')}!`, 'success');
       return result;
     });
+  };
+
+  // Flat data for other views
+  const flatOrders = useMemo(() => {
+    return columns.flatMap((col) =>
+      col.cards.map((card) => ({
+        id: card.id,
+        customer: card.customer,
+        itemsCount: card.itemsCount,
+        courier: card.courier,
+        date: card.date,
+        status: col.id,
+      }))
+    );
+  }, [columns]);
+
+  // Sort flat data
+  const sortedFlatOrders = useMemo(() => {
+    return [...flatOrders].sort((a, b) => {
+      let comp = 0;
+      if (sortKey === 'id') {
+        comp = a.id.localeCompare(b.id);
+      } else if (sortKey === 'customer') {
+        comp = a.customer.localeCompare(b.customer);
+      } else if (sortKey === 'itemsCount') {
+        comp = a.itemsCount - b.itemsCount;
+      } else if (sortKey === 'courier') {
+        comp = a.courier.localeCompare(b.courier);
+      } else if (sortKey === 'date') {
+        comp = a.date.localeCompare(b.date);
+      }
+      return sortDirection === 'asc' ? comp : -comp;
+    });
+  }, [flatOrders, sortKey, sortDirection]);
+
+  // Columns for Kanban mode
+  const getKanbanColumnsFulfillment = () => {
+    const allCols = [
+      { id: 'PAID', title: '📥 Pesanan Baru' },
+      { id: 'PROCESSING', title: '⚙️ Diproses' },
+      { id: 'PACKED', title: '📦 Siap Dikirim' },
+      { id: 'SHIPPED', title: '🚚 Dalam Pengiriman' },
+    ];
+    return columns
+      .filter((col) => visibleKanbanCols.includes(col.id))
+      .map((col) => {
+        const titleEmoji = allCols.find((x) => x.id === col.id)?.title || col.title;
+        return {
+          ...col,
+          title: titleEmoji,
+        };
+      });
   };
 
   // Find selected card in all columns
@@ -190,32 +256,264 @@ const FulfillmentShowcase = () => {
       />
 
       {/* Main Content Area */}
-      <div style={{ flex: 1, overflow: 'auto', padding: 24, display: 'flex', flexDirection: 'column' }}>
+      <div style={{
+        flex: 1,
+        overflow: 'auto',
+        padding: 24,
+        display: 'flex',
+        flexDirection: 'column',
+        transition: 'margin-left 0.3s ease, margin-right 0.3s ease',
+        marginLeft: isDesktop ? (isCollapsed ? 64 : 240) : 0,
+        marginRight: selectedCardId !== null && isDesktop ? 440 : 0,
+      }}>
         {/* Header */}
-        <div style={{ marginBottom: 24 }}>
-          <h1 style={{ font: 'var(--text-h1)', color: 'var(--ciamik-ink)', marginBottom: 4 }}>
-            Fulfillment & Logistik
-          </h1>
-          <p style={{ font: 'var(--text-small)', color: 'var(--ciamik-text-secondary)' }}>
-            Lacak alur pengiriman barang secara linear. Tarik dan lepas kartu pesanan untuk memperbarui status pengiriman.
-          </p>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16, marginBottom: 24 }}>
+          <div>
+            <h1 style={{ font: 'var(--text-h1)', color: 'var(--ciamik-ink)', marginBottom: 4 }}>
+              Fulfillment & Logistik
+            </h1>
+            <p style={{ font: 'var(--text-small)', color: 'var(--ciamik-text-secondary)' }}>
+              Lacak alur pengiriman barang secara linear. Tarik dan lepas kartu pesanan untuk memperbarui status pengiriman.
+            </p>
+          </div>
+
+          {/* View Switcher + Columns Dropdown wrapper */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <ViewSwitcher
+              activeView={activeView}
+              onChange={setActiveView}
+              options={[
+                { key: 'table', label: 'Tabel' },
+                { key: 'list', label: 'List' },
+                { key: 'grid', label: 'Cards' },
+                { key: 'kanban', label: 'Kanban' },
+              ]}
+            />
+            {activeView === 'kanban' && (
+              <div style={{ position: 'relative', display: 'inline-block' }}>
+                <Button
+                  variant="secondary"
+                  onClick={() => setIsColumnSelectorOpen(!isColumnSelectorOpen)}
+                  style={{
+                    width: 32,
+                    height: 32,
+                    padding: 0,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  title="Kolom Kanban"
+                >
+                  <Columns size={16} weight="duotone" />
+                </Button>
+                {isColumnSelectorOpen && (
+                  <div style={{
+                    position: 'absolute',
+                    top: 'calc(100% + 6px)',
+                    right: 0,
+                    zIndex: 1000,
+                    background: 'white',
+                    border: '1px solid var(--ciamik-border)',
+                    borderRadius: 'var(--r-lg)',
+                    boxShadow: 'var(--sh-lg)',
+                    padding: '12px 14px',
+                    width: 220,
+                  }}>
+                    <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 8, color: 'var(--ciamik-ink)' }}>
+                      Pilih Kolom (Maks 4)
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                      {[
+                        { id: 'PAID', title: 'Pesanan Baru' },
+                        { id: 'PROCESSING', title: 'Diproses' },
+                        { id: 'PACKED', title: 'Siap Dikirim' },
+                        { id: 'SHIPPED', title: 'Dalam Pengiriman' },
+                      ].map((col) => {
+                        const isChecked = visibleKanbanCols.includes(col.id);
+                        return (
+                          <label key={col.id} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, color: 'var(--ciamik-ink)', cursor: 'pointer' }}>
+                            <input
+                              type="checkbox"
+                              checked={isChecked}
+                              disabled={!isChecked && visibleKanbanCols.length >= 4}
+                              onChange={() => {
+                                if (isChecked) {
+                                  if (visibleKanbanCols.length > 1) {
+                                    setVisibleKanbanCols(visibleKanbanCols.filter(id => id !== col.id));
+                                  }
+                                } else {
+                                  if (visibleKanbanCols.length < 4) {
+                                    setVisibleKanbanCols([...visibleKanbanCols, col.id]);
+                                  }
+                                }
+                              }}
+                              style={{ cursor: 'pointer' }}
+                            />
+                            <span>{col.title}</span>
+                          </label>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Board */}
-        <div style={{ flex: 1, overflow: 'auto' }}>
-          <KanbanBoard
-            columns={columns}
-            onCardMove={handleCardMove}
-            validateMove={validateMove}
-            renderCard={renderFulfillmentCard}
+        {/* View renderers */}
+        {activeView === 'kanban' && (
+          <div style={{ flex: 1, overflow: 'auto' }}>
+            <KanbanBoard
+              columns={getKanbanColumnsFulfillment()}
+              onCardMove={handleCardMove}
+              validateMove={validateMove}
+              renderCard={renderFulfillmentCard}
+            />
+          </div>
+        )}
+
+        {activeView === 'table' && (
+          <DataTable
+            columns={[
+              { key: 'id', label: 'Order ID', sortable: true },
+              { key: 'customer', label: 'Pelanggan', sortable: true },
+              { key: 'itemsCount', label: 'Item', sortable: true, render: (row) => <span>{row.itemsCount} Item</span> },
+              { key: 'courier', label: 'Kurir', sortable: true },
+              { key: 'date', label: 'Tanggal', sortable: true },
+              {
+                key: 'status',
+                label: 'Status',
+                render: (row) => <StatusBadge status={row.status} />,
+              },
+            ]}
+            data={sortedFlatOrders}
+            keyExtractor={(row) => row.id}
+            selectable
+            sortKey={sortKey}
+            sortDirection={sortDirection}
+            onSortChange={(key, dir) => {
+              setSortKey(key);
+              setSortDirection(dir);
+            }}
+            onRowClick={(row) => setSelectedCardId(row.id)}
           />
-        </div>
+        )}
+
+        {activeView === 'list' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            {sortedFlatOrders.length === 0 ? (
+              <div style={{ padding: 40, textAlign: 'center', backgroundColor: 'var(--ciamik-surface)', borderRadius: 'var(--r-lg)', color: 'var(--ciamik-text-secondary)' }}>
+                Tidak ada data fulfillment.
+              </div>
+            ) : (
+              sortedFlatOrders.map((order) => (
+                <div
+                  key={order.id}
+                  onClick={() => setSelectedCardId(order.id)}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: 16,
+                    backgroundColor: 'var(--ciamik-surface)',
+                    border: '1px solid var(--ciamik-border-faint)',
+                    borderRadius: 'var(--r-lg)',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--ciamik-primary)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--ciamik-border-faint)'; }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <div style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: 'var(--r-md)',
+                      backgroundColor: 'var(--ciamik-bg)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: 'var(--ciamik-primary)',
+                      fontWeight: 'bold'
+                    }}>
+                      {order.id.slice(-2)}
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 700, color: 'var(--ciamik-ink)', fontSize: 13 }}>{order.id}</div>
+                      <div style={{ fontSize: 11, color: 'var(--ciamik-text-secondary)' }}>
+                        {order.customer} · {order.courier}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <div style={{ textAlign: 'right', marginRight: 12 }}>
+                      <div style={{ fontWeight: 700, color: 'var(--ciamik-primary)' }}>{order.itemsCount} item</div>
+                      <div style={{ fontSize: 11, color: 'var(--ciamik-text-tertiary)' }}>{order.date}</div>
+                    </div>
+                    <StatusBadge status={order.status} />
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        )}
+
+        {activeView === 'grid' && (
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 16 }}>
+            {sortedFlatOrders.length === 0 ? (
+              <div style={{ gridColumn: '1 / -1', padding: 40, textAlign: 'center', backgroundColor: 'var(--ciamik-surface)', borderRadius: 'var(--r-lg)', color: 'var(--ciamik-text-secondary)' }}>
+                Tidak ada data fulfillment.
+              </div>
+            ) : (
+              sortedFlatOrders.map((order) => (
+                <div
+                  key={order.id}
+                  onClick={() => setSelectedCardId(order.id)}
+                  style={{
+                    backgroundColor: 'var(--ciamik-surface)',
+                    border: '1px solid var(--ciamik-border-faint)',
+                    borderRadius: 'var(--r-lg)',
+                    padding: 16,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    gap: 12,
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--ciamik-primary)'; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--ciamik-border-faint)'; }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontWeight: 700, color: 'var(--ciamik-ink)' }}>{order.id}</span>
+                    <StatusBadge status={order.status} />
+                  </div>
+                  <div>
+                    <div style={{ font: 'var(--text-body)', fontWeight: 600, color: 'var(--ciamik-ink)' }}>{order.customer}</div>
+                    <div style={{ fontSize: 12, color: 'var(--ciamik-text-secondary)', marginTop: 4 }}>
+                      {order.date} · {order.courier}
+                    </div>
+                  </div>
+                  <div style={{
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                    paddingTop: 12, borderTop: '1px solid var(--ciamik-border-faint)'
+                  }}>
+                    <span style={{ fontSize: 12, color: 'var(--ciamik-text-tertiary)' }}>{order.itemsCount} item</span>
+                    <span style={{ fontWeight: 700, color: 'var(--ciamik-primary)' }}>{order.courier}</span>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        )}
       </div>
 
       {/* Logistics Detail Pane */}
       <DetailPane
         isOpen={selectedCardId !== null}
         onClose={() => setSelectedCardId(null)}
+        mode="push"
         title={selectedCard ? `Fulfillment: ${selectedCard.id}` : ''}
       >
         {selectedCard && (

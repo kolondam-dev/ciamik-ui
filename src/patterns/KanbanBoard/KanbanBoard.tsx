@@ -49,7 +49,7 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
 
       if (sourceColumnId === targetColumnId) return;
 
-      // Run linear validation if provided
+      // Run validation if provided
       if (validateMove) {
         const isValid = validateMove(cardId, sourceColumnId, targetColumnId);
         if (!isValid) {
@@ -68,43 +68,46 @@ export const KanbanBoard: React.FC<KanbanBoardProps> = ({
   };
 
   return (
-    <div className={cn(styles.board, className)}>
-      {columns.slice(0, 4).map((col) => (
-        <div
-          key={col.id}
-          className={styles.column}
-          onDragOver={handleDragOver}
-          onDrop={(e) => handleDrop(e, col.id)}
-          data-testid={`kanban-column-${col.id}`}
-        >
-          {/* Column Header */}
-          <div className={styles.columnHeader}>
-            <h4 className={styles.columnTitle}>{col.title}</h4>
-            <span className={styles.cardCount}>{col.cards.length}</span>
-          </div>
+    <div className={cn(styles.boardContainer, className)}>
+      {/* Board Columns Grid */}
+      <div className={styles.board}>
+        {columns.map((col) => (
+          <div
+            key={col.id}
+            className={styles.column}
+            onDragOver={handleDragOver}
+            onDrop={(e) => handleDrop(e, col.id)}
+            data-testid={`kanban-column-${col.id}`}
+          >
+            {/* Column Header */}
+            <div className={styles.columnHeader}>
+              <h4 className={styles.columnTitle}>{col.title}</h4>
+              <span className={styles.cardCount}>{col.cards.length}</span>
+            </div>
 
-          {/* Cards List */}
-          <div className={styles.cardsList}>
-            {col.cards.map((card) => (
-              <div
-                key={card.id}
-                draggable
-                onDragStart={(e) => handleDragStart(e, card.id, col.id)}
-                className={styles.draggableCardWrapper}
-                data-testid={`kanban-card-${card.id}`}
-              >
-                {renderCard ? (
-                  renderCard(card)
-                ) : (
-                  <Card interactive className={styles.defaultCard}>
-                    <h5 className={styles.cardTitle}>{card.title}</h5>
-                  </Card>
-                )}
-              </div>
-            ))}
+            {/* Cards List */}
+            <div className={styles.cardsList}>
+              {col.cards.map((card) => (
+                <div
+                  key={card.id}
+                  draggable
+                  onDragStart={(e) => handleDragStart(e, card.id, col.id)}
+                  className={styles.draggableCardWrapper}
+                  data-testid={`kanban-card-${card.id}`}
+                >
+                  {renderCard ? (
+                    renderCard(card)
+                  ) : (
+                    <Card interactive className={styles.defaultCard}>
+                      <h5 className={styles.cardTitle}>{card.title}</h5>
+                    </Card>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

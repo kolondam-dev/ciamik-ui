@@ -3,7 +3,7 @@
   width: 100%;
   overflow: hidden;
   aspect-ratio: 16 / 9;
-  border-radius: var(--r-xl);
+  border-radius: 0;
   background-color: var(--ciamik-bg);
 }
 

@@ -1,3 +1,66 @@
+.boardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  width: 100%;
+}
+
+.boardHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  padding: var(--space-xs) 0;
+  border-bottom: 1px dashed var(--ciamik-border-faint);
+  padding-bottom: var(--space-sm);
+}
+
+.selectorLabel {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ciamik-text-secondary);
+}
+
+.selectorChips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.chip {
+  padding: 6px 12px;
+  border-radius: var(--r-pill);
+  border: 1px solid var(--ciamik-border);
+  background-color: var(--ciamik-surface);
+  color: var(--ciamik-text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease);
+}
+
+.chip:hover:not(:disabled) {
+  background-color: var(--ciamik-bg-hover);
+  color: var(--ciamik-ink);
+}
+
+.activeChip {
+  background-color: var(--ciamik-primary);
+  border-color: var(--ciamik-primary);
+  color: var(--ciamik-surface);
+}
+
+.activeChip:hover:not(:disabled) {
+  background-color: var(--ciamik-primary);
+  opacity: 0.9;
+  color: var(--ciamik-surface);
+}
+
+.disabledChip {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .board {
   display: flex;
   gap: var(--space-md);

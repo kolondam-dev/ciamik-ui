@@ -63,6 +63,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
     <Badge
       variant={config.intent === 'neutral' ? 'neutral' : config.intent}
       className={className}
+      pill={true}
     >
       <span className={styles.inner}>
         {!hideIcon && IconComponent && (

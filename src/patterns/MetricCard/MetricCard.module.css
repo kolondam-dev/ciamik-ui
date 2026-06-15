@@ -1,7 +1,89 @@
 .card {
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  height: 100%;
 }
+
+.dashboardInner {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.dashboardInner > div {
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.simpleInner {
+  position: relative;
+  overflow: hidden;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.activeCard {
+  border-color: var(--ciamik-primary) !important;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px 6px 0;
+  margin: 0;
+}
+
+.metricTitleGroup {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.badgeTitle {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 3px 8px 3px 14px;
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  white-space: nowrap;
+}
+
+.metricInfoBtn {
+  opacity: 0.5;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.metricInfoBtn:hover {
+  opacity: 1;
+}
+
+.infoIcon {
+  color: var(--ciamik-text-tertiary);
+}
+
+.metricIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+}
+
+/* badge color themes */
+.badge_teal { background-color: rgba(47, 122, 120, 0.08); color: var(--ciamik-teal-600, #2f7a78); }
+.badge_navy { background-color: rgba(61, 72, 112, 0.08); color: var(--ciamik-navy-600, #263059); }
+.badge_coral { background-color: rgba(255, 127, 80, 0.08); color: #E06336; }
+.badge_mustard { background-color: rgba(212, 160, 23, 0.08); color: #B3860F; }
+.badge_red { background-color: rgba(192, 57, 43, 0.08); color: var(--ciamik-red-600, #c0392b); }
+.badge_default { background-color: var(--ciamik-bg-hover); color: var(--ciamik-text-secondary); }
 
 .header {
   margin-bottom: var(--space-xs);
@@ -69,21 +151,113 @@
   justify-content: center;
 }
 
+.metricBody {
+  padding: 10px 14px 6px;
+  display: flex;
+  flex-direction: column;
+}
+
+.metricSparkline {
+  height: 44px;
+  margin: 0 0 12px 0;
+  display: block;
+}
+
+.metricFoot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .recommendationWrapper {
-  margin-top: var(--space-sm);
-  padding-top: var(--space-sm);
-  border-top: 1px solid var(--ciamik-border-faint);
+  font-size: 10.5px;
+  color: var(--ciamik-text-secondary);
+  padding: 10px 14px 12px;
+  border-top: 1px dashed var(--ciamik-border-faint);
+  line-height: 1.4;
 }
 
 .recommendation {
   margin: 0;
   font-family: inherit;
-  font-size: 12px;
+  font-size: 11px;
   line-height: 1.5;
-  color: var(--ciamik-primary);
+  color: var(--ciamik-text-secondary);
   font-weight: 500;
 }
 
-:global(.dark) .recommendation {
-  color: var(--ciamik-primary-hover);
+/* ── Active Indicator Bar ── */
+.activeIndicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ciamik-primary) 0%, var(--ciamik-accent) 100%);
+  border-radius: 3px 3px 0 0;
+  transform-origin: left center;
+}
+
+/* ── Simple Variant 2-column styles ── */
+.cardSimple {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background-color: var(--ciamik-surface);
+  border: 1px solid rgba(194, 198, 214, 0.25);
+  box-sizing: border-box;
+}
+
+.simpleContainer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.simpleIcon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  width: 32px;
+  height: 32px;
+  transition: color var(--dur-base) var(--ease);
+}
+
+.verticalDivider {
+  width: 1px;
+  background-color: rgba(194, 198, 214, 0.45);
+  height: 32px;
+  align-self: center;
+  margin: 0 4px 0 2px;
+}
+
+.simpleData {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.simpleTitle {
+  font-size: 11px;
+  color: var(--ciamik-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 500;
+}
+
+.simpleValue {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ciamik-ink);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
 }
