@@ -35,9 +35,83 @@ export interface BrandTokens {
   borderFaint?: string;
 }
 
+export interface GlobalLabels {
+  emptyState?: {
+    noDataTitle?: string;
+    noDataDesc?: string;
+    noResultsTitle?: string;
+    noResultsDesc?: string;
+    noPermissionTitle?: string;
+    noPermissionDesc?: string;
+    noConnectionTitle?: string;
+    noConnectionDesc?: string;
+  };
+  pagination?: {
+    prev?: string;
+    next?: string;
+    loadMore?: string;
+    pageAria?: (page: number | string) => string;
+  };
+  otpFlow?: {
+    step1Title?: string;
+    step1Desc?: string;
+    step1Cta?: string;
+    step1Placeholder?: string;
+    step2Title?: string;
+    step2Desc?: (phone: string) => string | React.ReactNode;
+    step2Cta?: string;
+    step2ResendText?: (timer: number) => string;
+    step2ResendCta?: string;
+    step3Title?: string;
+    step3Desc?: string;
+    errorInvalidPhone?: string;
+    errorSendFail?: string;
+    errorConnection?: string;
+    errorIncomplete?: string;
+    errorVerifyFail?: string;
+    errorResendFail?: string;
+    cancel?: string;
+  };
+  dateRangePicker?: {
+    today?: string;
+    yesterday?: string;
+    last7Days?: string;
+    last30Days?: string;
+    custom?: string;
+    startDate?: string;
+    endDate?: string;
+    compare?: string;
+  };
+  dataTable?: {
+    emptyTitle?: string;
+    emptyDesc?: string;
+    loading?: string;
+    selectedRows?: (count: number) => string;
+    actionsColumn?: string;
+  };
+  systemAlert?: {
+    close?: string;
+  };
+  searchFilterBar?: {
+    searchPlaceholder?: string;
+    clearSearchAria?: string;
+  };
+  statusBadge?: Record<string, string>;
+  modal?: {
+    close?: string;
+    confirm?: string;
+    cancel?: string;
+  };
+  sheet?: {
+    close?: string;
+  };
+}
+
 export interface CiamikProviderProps {
   /** Brand token overrides (Layer 3) */
   brand?: BrandTokens;
+  /** Global i18n labels configuration */
+  labels?: GlobalLabels;
   /** Enable dark mode */
   darkMode?: boolean;
   /** Children to render */

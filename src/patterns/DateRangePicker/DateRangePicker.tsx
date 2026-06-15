@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Calendar, CaretDown } from '@phosphor-icons/react';
 import { cn } from '../../utils';
+import { useCiamik } from '../../provider';
 import styles from './DateRangePicker.module.css';
 
 export interface DateRangePreset {
@@ -17,6 +18,16 @@ export interface DateRangePickerProps {
   compare?: boolean;
   onCompareChange?: (compare: boolean) => void;
   className?: string;
+  translations?: {
+    today?: string;
+    yesterday?: string;
+    last7Days?: string;
+    last30Days?: string;
+    custom?: string;
+    startDate?: string;
+    endDate?: string;
+    compare?: string;
+  };
 }
 
 const formatDateString = (date: Date | null): string => {
@@ -92,7 +103,20 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
   compare = false,
   onCompareChange,
   className,
+  translations,
 }) => {
+  const { labels } = useCiamik();
+  const t = {
+    today: translations?.today || labels?.dateRangePicker?.today || 'Hari Ini',
+    yesterday: translations?.yesterday || labels?.dateRangePicker?.yesterday || 'Kemarin',
+    last7Days: translations?.last7Days || labels?.dateRangePicker?.last7Days || '7 Hari Terakhir',
+    last30Days: translations?.last30Days || labels?.dateRangePicker?.last30Days || '30 Hari Terakhir',
+    custom: translations?.custom || labels?.dateRangePicker?.custom || 'Kustom',
+    startDate: translations?.startDate || labels?.dateRangePicker?.startDate || 'Mulai',
+    endDate: translations?.endDate || labels?.dateRangePicker?.endDate || 'Selesai',
+    compare: translations?.compare || labels?.dateRangePicker?.compare || 'Bandingkan dengan periode sebelumnya',
+  };
+
   const [isOpen, setIsOpen] = useState(false);
   const [activePreset, setActivePreset] = useState<string>('last-7-days');
   const [isCustom, setIsCustom] = useState(false);
@@ -136,11 +160,15 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
   // Get active range label
   const getLabel = () => {
     if (isCustom) {
-      return `Kustom (${formatDateString(startDate)} - ${formatDateString(endDate)})`;
+      return `${t.custom} (${formatDateString(startDate)} - ${formatDateString(endDate)})`;
     }
     const currentPreset = presets.find((p) => p.key === activePreset);
     if (currentPreset) {
-      return `${currentPreset.label} (${formatDateString(startDate)} - ${formatDateString(endDate)})`;
+      const presetLabel = currentPreset.key === 'today' ? t.today :
+                          currentPreset.key === 'yesterday' ? t.yesterday :
+                          currentPreset.key === 'last-7-days' ? t.last7Days :
+                          currentPreset.key === 'last-30-days' ? t.last30Days : currentPreset.label;
+      return `${presetLabel} (${formatDateString(startDate)} - ${formatDateString(endDate)})`;
     }
     return `${formatDateString(startDate)} - ${formatDateString(endDate)}`;
   };
@@ -173,7 +201,10 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
                   onClick={() => handlePresetClick(preset)}
                   className={cn(styles.presetItem, isActive && styles.activeItem)}
                 >
-                  {preset.label}
+                  {preset.key === 'today' ? t.today :
+                   preset.key === 'yesterday' ? t.yesterday :
+                   preset.key === 'last-7-days' ? t.last7Days :
+                   preset.key === 'last-30-days' ? t.last30Days : preset.label}
                 </button>
               );
             })}
@@ -182,7 +213,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
               onClick={handleCustomSelect}
               className={cn(styles.presetItem, isCustom && styles.activeItem)}
             >
-              Kustom
+              {t.custom}
             </button>
           </div>
 
@@ -190,7 +221,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
           {isCustom && (
             <div className={styles.customSection} data-testid="custom-inputs">
               <div className={styles.inputGroup}>
-                <label className={styles.inputLabel}>Mulai</label>
+                <label className={styles.inputLabel}>{t.startDate}</label>
                 <input
                   type="date"
                   value={toInputFormat(startDate)}
@@ -199,7 +230,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
                 />
               </div>
               <div className={styles.inputGroup}>
-                <label className={styles.inputLabel}>Selesai</label>
+                <label className={styles.inputLabel}>{t.endDate}</label>
                 <input
                   type="date"
                   value={toInputFormat(endDate)}
@@ -220,7 +251,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
                   onChange={(e) => onCompareChange(e.target.checked)}
                   className={styles.compareCheckbox}
                 />
-                <span>Bandingkan dengan periode sebelumnya</span>
+                <span>{t.compare}</span>
               </label>
             </div>
           )}

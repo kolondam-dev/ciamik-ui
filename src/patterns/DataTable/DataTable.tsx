@@ -2,6 +2,7 @@ import React from 'react';
 import { cn } from '../../utils';
 import { ArrowUp, ArrowDown, ArrowsDownUp } from '@phosphor-icons/react';
 import { Checkbox } from './Checkbox'; // We will build a small inline checkbox or use basic input checkbox
+import { useCiamik } from '../../provider';
 import styles from './DataTable.module.css';
 
 export interface DataTableColumn<T> {
@@ -27,6 +28,13 @@ export interface DataTableProps<T> {
   emptyState?: React.ReactNode;
   rowActions?: (row: T) => React.ReactNode;
   onRowClick?: (row: T) => void;
+  translations?: {
+    emptyTitle?: string;
+    emptyDesc?: string;
+    loading?: string;
+    selectedRows?: (count: number) => string;
+    actionsColumn?: string;
+  };
 }
 
 export function DataTable<T>({
@@ -44,7 +52,17 @@ export function DataTable<T>({
   emptyState,
   rowActions,
   onRowClick,
+  translations,
 }: DataTableProps<T>) {
+  const { labels } = useCiamik();
+  const t = {
+    emptyTitle: translations?.emptyTitle || labels?.dataTable?.emptyTitle || 'Data tidak tersedia.',
+    emptyDesc: translations?.emptyDesc || labels?.dataTable?.emptyDesc || '',
+    loading: translations?.loading || labels?.dataTable?.loading || 'Memuat data...',
+    selectedRows: translations?.selectedRows || labels?.dataTable?.selectedRows || ((count) => `${count} baris terpilih`),
+    actionsColumn: translations?.actionsColumn || labels?.dataTable?.actionsColumn || 'Aksi',
+  };
+
   const allRowKeys = data.map(keyExtractor);
   const isAllSelected = data.length > 0 && allRowKeys.every((k) => selectedKeys.includes(k));
   const isSomeSelected = data.length > 0 && selectedKeys.length > 0 && !isAllSelected;
@@ -104,7 +122,7 @@ export function DataTable<T>({
       {selectable && selectedKeys.length > 0 && bulkActions && (
         <div className={styles.bulkActionsBar} data-testid="bulk-actions-bar">
           <span className={styles.selectedCount}>
-            {selectedKeys.length} baris terpilih
+            {t.selectedRows(selectedKeys.length)}
           </span>
           <div className={styles.bulkActions}>{bulkActions}</div>
         </div>
@@ -159,7 +177,7 @@ export function DataTable<T>({
                   </th>
                 );
               })}
-              {rowActions && <th className={cn(styles.th, styles.actionsCol)}>Aksi</th>}
+              {rowActions && <th className={cn(styles.th, styles.actionsCol)}>{t.actionsColumn}</th>}
             </tr>
           </thead>
 
@@ -169,7 +187,7 @@ export function DataTable<T>({
                 <td colSpan={columns.length + (selectable ? 1 : 0) + (rowActions ? 1 : 0)} className={styles.loadingCell}>
                   <div className={styles.loadingWrapper}>
                     <div className={styles.spinner} />
-                    <span>Memuat data...</span>
+                    <span>{t.loading}</span>
                   </div>
                 </td>
               </tr>
@@ -177,7 +195,10 @@ export function DataTable<T>({
               <tr>
                 <td colSpan={columns.length + (selectable ? 1 : 0) + (rowActions ? 1 : 0)} className={styles.emptyCell}>
                   {emptyState || (
-                    <div className={styles.emptyStateDefault}>Data tidak tersedia.</div>
+                    <div className={styles.emptyStateDefault}>
+                      <div>{t.emptyTitle}</div>
+                      {t.emptyDesc && <div style={{ marginTop: '4px', opacity: 0.8 }}>{t.emptyDesc}</div>}
+                    </div>
                   )}
                 </td>
               </tr>

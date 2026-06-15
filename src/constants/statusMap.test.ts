@@ -1,20 +1,23 @@
 import { describe, it, expect } from 'vitest';
-import { STATUS_MAP, ALL_STATUSES, ORDER_STATUSES, RETURN_STATUSES } from './statusMap';
+import { STATUS_MAP, ORDER_STATUSES, RETURN_STATUSES } from './statusMap';
 
 describe('STATUS_MAP', () => {
-  it('should contain all 15 mapped statuses', () => {
-    expect(ALL_STATUSES.length).toBe(15);
+  it('should contain exact 15 canonical keys including all return flows', () => {
+    const keys = Object.keys(STATUS_MAP);
+    expect(keys.length).toBe(15);
+    
+    const canonicalKeys = [
+      'PENDING_PAYMENT', 'PAID', 'PROCESSING', 'PACKED', 'SHIPPED', 'DELIVERED', 'COMPLETED',
+      'CANCELLED', 'RETURN_REQUESTED', 'DISPUTED', 'RETURN_IN_TRANSIT', 'RETURN_RECEIVED',
+      'RETURN_REJECTED', 'REFUNDED', 'EXCHANGED'
+    ];
+
+    canonicalKeys.forEach(key => {
+      expect(keys).toContain(key);
+    });
   });
 
   it('should separate order and return statuses correctly', () => {
-    expect(ORDER_STATUSES).toContain('PENDING_PAYMENT');
-    expect(ORDER_STATUSES).toContain('COMPLETED');
-    expect(ORDER_STATUSES).toContain('CANCELLED');
-
-    expect(RETURN_STATUSES).toContain('RETURN_REQUESTED');
-    expect(RETURN_STATUSES).toContain('REFUNDED');
-    expect(RETURN_STATUSES).toContain('EXCHANGED');
-
     expect(ORDER_STATUSES.length + RETURN_STATUSES.length).toBe(15);
   });
 

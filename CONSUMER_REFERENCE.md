@@ -7,7 +7,15 @@ Panduan praktis bagi developer untuk mengintegrasikan dan menggunakan `@ciamik/u
 ## 📦 1. Setup Awal
 
 ### Instalasi Library
-Install library `@ciamik/ui` beserta peer dependencies yang dibutuhkan:
+Karena pustaka ini dipublikasikan secara privat melalui **GitHub Packages**, Anda harus mengonfigurasi autentikasi terlebih dahulu.
+
+1. Buat berkas `.npmrc` di root aplikasi Anda:
+```ini
+@ciamik:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
+2. Pastikan variabel lingkungan `GITHUB_TOKEN` terisi dengan Personal Access Token (PAT) GitHub yang memiliki akses `read:packages`.
+3. Install library `@ciamik/ui` beserta peer dependencies yang dibutuhkan:
 
 ```bash
 npm install @ciamik/ui react react-dom framer-motion @phosphor-icons/react
@@ -56,6 +64,9 @@ export default function Root() {
   );
 }
 ```
+
+> [!NOTE]
+> **Server-Side Rendering (SSR)**: Karena `CiamikProvider` menggunakan `useEffect` (client-side) untuk mengatur atribut tema, Anda mungkin akan mengalami *flash of incorrect theme* pada saat muatan pertama (*first paint*) di aplikasi berbasis SSR seperti Next.js. Untuk menghindarinya, Anda dapat mengatur `data-theme="dark"` secara langsung pada elemen `<html>` di sisi server.
 
 ### Contoh Kustomisasi Brand (Layer 3 Override)
 Jika Anda memiliki sistem multi-tenant di mana setiap toko (merchant) memiliki warna tema unik:

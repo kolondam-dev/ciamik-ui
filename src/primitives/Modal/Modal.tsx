@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Warning } from '@phosphor-icons/react';
 import { cn } from '../../utils';
 import { Button } from '../Button';
+import { useCiamik } from '../../provider';
 import styles from './Modal.module.css';
 
 export interface ModalProps {
@@ -18,6 +19,11 @@ export interface ModalProps {
   confirmLabel?: string;
   onConfirm?: () => void;
   cancelLabel?: string;
+  translations?: {
+    close?: string;
+    confirm?: string;
+    cancel?: string;
+  };
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -31,8 +37,16 @@ export const Modal: React.FC<ModalProps> = ({
   onDestructiveAction,
   confirmLabel,
   onConfirm,
-  cancelLabel = 'Batal',
+  cancelLabel,
+  translations,
 }) => {
+  const { labels } = useCiamik();
+  const t = {
+    close: translations?.close || labels?.modal?.close || 'Tutup',
+    confirm: confirmLabel || translations?.confirm || labels?.modal?.confirm || 'Konfirmasi',
+    cancel: cancelLabel || translations?.cancel || labels?.modal?.cancel || 'Batal',
+  };
+
   // Lock body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
@@ -74,7 +88,7 @@ export const Modal: React.FC<ModalProps> = ({
                 {destructive && <Warning size={20} weight="fill" className={styles.warningIcon} />}
                 <h3 className={styles.title}>{title}</h3>
               </div>
-              <button type="button" className={styles.closeBtn} onClick={onClose} aria-label="Tutup">
+              <button type="button" className={styles.closeBtn} onClick={onClose} aria-label={t.close}>
                 <X size={18} weight="bold" />
               </button>
             </div>
@@ -89,7 +103,7 @@ export const Modal: React.FC<ModalProps> = ({
               ) : (
                 <div className={styles.defaultFooterActions}>
                   <Button variant="secondary" onClick={onClose} size="md">
-                    {cancelLabel}
+                    {t.cancel}
                   </Button>
                   {destructive && onDestructiveAction && (
                     <Button variant="danger" onClick={onDestructiveAction} size="md">
@@ -98,7 +112,7 @@ export const Modal: React.FC<ModalProps> = ({
                   )}
                   {!destructive && onConfirm && (
                     <Button variant="primary" onClick={onConfirm} size="md">
-                      {confirmLabel || 'Konfirmasi'}
+                      {t.confirm}
                     </Button>
                   )}
                 </div>

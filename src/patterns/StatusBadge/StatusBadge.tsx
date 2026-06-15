@@ -16,6 +16,7 @@ import {
 } from '@phosphor-icons/react';
 import { Badge } from '../../primitives/Badge';
 import { STATUS_MAP } from '../../constants/statusMap';
+import { useCiamik } from '../../provider';
 import styles from './StatusBadge.module.css';
 
 const ICON_COMPONENTS: Record<string, React.ComponentType<any>> = {
@@ -36,15 +37,18 @@ const ICON_COMPONENTS: Record<string, React.ComponentType<any>> = {
 
 export interface StatusBadgeProps {
   status: keyof typeof STATUS_MAP;
+  label?: string;
   className?: string;
   hideIcon?: boolean;
 }
 
 export const StatusBadge: React.FC<StatusBadgeProps> = ({
   status,
+  label,
   className,
   hideIcon = false,
 }) => {
+  const { labels } = useCiamik();
   const config = STATUS_MAP[status];
 
   if (!config) {
@@ -71,7 +75,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
             <IconComponent size={13} weight="bold" />
           </span>
         )}
-        <span>{config.label}</span>
+        <span>{label || labels?.statusBadge?.[status] || config.label}</span>
       </span>
     </Badge>
   );

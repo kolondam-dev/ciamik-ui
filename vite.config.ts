@@ -36,7 +36,7 @@ export default defineConfig({
           'framer-motion': 'framerMotion',
         },
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') return 'style.css';
+          if (assetInfo.name && assetInfo.name.endsWith('.css')) return 'style.css';
           return assetInfo.name ?? 'assets/[name]-[hash][extname]';
         },
       },

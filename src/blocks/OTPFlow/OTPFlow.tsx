@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { WhatsappLogo, Key, CheckCircle, Spinner } from '@phosphor-icons/react';
 import { cn } from '../../utils';
+import { useCiamik } from '../../provider';
 import styles from './OTPFlow.module.css';
 
 export interface OTPFlowProps {
@@ -10,6 +11,26 @@ export interface OTPFlowProps {
   onSuccess?: () => void;
   onCancel?: () => void;
   className?: string;
+  translations?: {
+    step1Title?: string;
+    step1Desc?: string;
+    step1Cta?: string;
+    step1Placeholder?: string;
+    step2Title?: string;
+    step2Desc?: (phone: string) => string | React.ReactNode;
+    step2Cta?: string;
+    step2ResendText?: (timer: number) => string;
+    step2ResendCta?: string;
+    step3Title?: string;
+    step3Desc?: string;
+    errorInvalidPhone?: string;
+    errorSendFail?: string;
+    errorConnection?: string;
+    errorIncomplete?: string;
+    errorVerifyFail?: string;
+    errorResendFail?: string;
+    cancel?: string;
+  };
 }
 
 export const OTPFlow: React.FC<OTPFlowProps> = ({
@@ -19,7 +40,30 @@ export const OTPFlow: React.FC<OTPFlowProps> = ({
   onSuccess,
   onCancel,
   className,
+  translations,
 }) => {
+  const { labels } = useCiamik();
+  const t = {
+    step1Title: translations?.step1Title || labels?.otpFlow?.step1Title || 'Verifikasi WhatsApp',
+    step1Desc: translations?.step1Desc || labels?.otpFlow?.step1Desc || 'Masukkan nomor WhatsApp Anda untuk mengirimkan kode OTP verifikasi keamanan.',
+    step1Cta: translations?.step1Cta || labels?.otpFlow?.step1Cta || 'Kirim Kode Verifikasi',
+    step1Placeholder: translations?.step1Placeholder || labels?.otpFlow?.step1Placeholder || '8123456789',
+    step2Title: translations?.step2Title || labels?.otpFlow?.step2Title || 'Masukkan Kode OTP',
+    step2Desc: translations?.step2Desc || labels?.otpFlow?.step2Desc || ((p: string) => <>Kode verifikasi telah dikirimkan ke nomor{' '}<strong className={styles.phoneHighlight}>+62 {p}</strong></>),
+    step2Cta: translations?.step2Cta || labels?.otpFlow?.step2Cta || 'Verifikasi & Lanjutkan',
+    step2ResendText: translations?.step2ResendText || labels?.otpFlow?.step2ResendText || ((time: number) => `Kirim ulang kode dalam ${time} detik`),
+    step2ResendCta: translations?.step2ResendCta || labels?.otpFlow?.step2ResendCta || 'Kirim Ulang Kode',
+    step3Title: translations?.step3Title || labels?.otpFlow?.step3Title || 'Verifikasi Berhasil',
+    step3Desc: translations?.step3Desc || labels?.otpFlow?.step3Desc || 'Akun Anda telah berhasil diverifikasi. Mengalihkan Anda secara otomatis...',
+    errorInvalidPhone: translations?.errorInvalidPhone || labels?.otpFlow?.errorInvalidPhone || 'Nomor WhatsApp tidak valid. Harus dimulai dengan angka 8 dan berisi 9-13 digit.',
+    errorSendFail: translations?.errorSendFail || labels?.otpFlow?.errorSendFail || 'Gagal mengirimkan kode OTP. Silakan coba lagi.',
+    errorConnection: translations?.errorConnection || labels?.otpFlow?.errorConnection || 'Terjadi kesalahan koneksi.',
+    errorIncomplete: translations?.errorIncomplete || labels?.otpFlow?.errorIncomplete || 'Masukkan 4 digit kode verifikasi yang lengkap.',
+    errorVerifyFail: translations?.errorVerifyFail || labels?.otpFlow?.errorVerifyFail || 'Kode verifikasi salah atau kedaluwarsa.',
+    errorResendFail: translations?.errorResendFail || labels?.otpFlow?.errorResendFail || 'Gagal mengirim ulang kode OTP.',
+    cancel: translations?.cancel || labels?.otpFlow?.cancel || 'Batalkan',
+  };
+
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [phone, setPhone] = useState(initialPhone);
   const [digits, setDigits] = useState<string[]>(['', '', '', '']);
@@ -79,7 +123,7 @@ export const OTPFlow: React.FC<OTPFlowProps> = ({
     // Validate phone: must start with 8 and be between 9-13 digits
     const cleanedPhone = phone.trim().replace(/\D/g, '');
     if (!cleanedPhone.startsWith('8') || cleanedPhone.length < 9 || cleanedPhone.length > 13) {
-      triggerShake('Nomor WhatsApp tidak valid. Harus dimulai dengan angka 8 dan berisi 9-13 digit.');
+      triggerShake(t.errorInvalidPhone);
       return;
     }
 
@@ -93,10 +137,10 @@ export const OTPFlow: React.FC<OTPFlowProps> = ({
         // Focus first digit after mounting step 2
         setTimeout(() => focusInput(0), 100);
       } else {
-        triggerShake('Gagal mengirimkan kode OTP. Silakan coba lagi.');
+        triggerShake(t.errorSendFail);
       }
     } catch (err) {
-      triggerShake('Terjadi kesalahan koneksi.');
+      triggerShake(t.errorConnection);
     } finally {
       setIsLoading(false);
     }
@@ -155,7 +199,7 @@ export const OTPFlow: React.FC<OTPFlowProps> = ({
 
     const code = digits.join('');
     if (code.length < 4) {
-      triggerShake('Masukkan 4 digit kode verifikasi yang lengkap.');
+      triggerShake(t.errorIncomplete);
       return;
     }
 
@@ -165,12 +209,12 @@ export const OTPFlow: React.FC<OTPFlowProps> = ({
       if (res !== false) {
         setStep(3);
       } else {
-        triggerShake('Kode verifikasi salah atau kedaluwarsa.');
+        triggerShake(t.errorVerifyFail);
         setDigits(['', '', '', '']);
         focusInput(0);
       }
     } catch (err) {
-      triggerShake('Terjadi kesalahan verifikasi.');
+      triggerShake(t.errorConnection);
     } finally {
       setIsLoading(false);
     }
@@ -191,10 +235,10 @@ export const OTPFlow: React.FC<OTPFlowProps> = ({
         setDigits(['', '', '', '']);
         focusInput(0);
       } else {
-        triggerShake('Gagal mengirim ulang kode OTP.');
+        triggerShake(t.errorResendFail);
       }
     } catch (err) {
-      triggerShake('Terjadi kesalahan saat kirim ulang.');
+      triggerShake(t.errorConnection);
     } finally {
       setIsLoading(false);
     }
@@ -218,9 +262,9 @@ export const OTPFlow: React.FC<OTPFlowProps> = ({
           <div className={styles.iconWrapper}>
             <WhatsappLogo size={48} weight="fill" className={styles.waIcon} />
           </div>
-          <h3 className={styles.title}>Verifikasi WhatsApp</h3>
+          <h3 className={styles.title}>{t.step1Title}</h3>
           <p className={styles.desc}>
-            Masukkan nomor WhatsApp Anda untuk mengirimkan kode OTP verifikasi keamanan.
+            {t.step1Desc}
           </p>
 
           <div className={styles.phoneGroup}>
@@ -229,7 +273,7 @@ export const OTPFlow: React.FC<OTPFlowProps> = ({
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
-              placeholder="8123456789"
+              placeholder={t.step1Placeholder}
               className={styles.phoneInput}
               disabled={isLoading}
               autoFocus
@@ -237,7 +281,7 @@ export const OTPFlow: React.FC<OTPFlowProps> = ({
           </div>
 
           <button type="submit" className={styles.ctaBtn} disabled={isLoading}>
-            {isLoading ? <Spinner className={styles.spinnerIcon} /> : 'Kirim Kode Verifikasi'}
+            {isLoading ? <Spinner className={styles.spinnerIcon} /> : t.step1Cta}
           </button>
         </form>
       )}
@@ -248,10 +292,9 @@ export const OTPFlow: React.FC<OTPFlowProps> = ({
           <div className={styles.iconWrapper}>
             <Key size={48} weight="fill" className={styles.keyIcon} />
           </div>
-          <h3 className={styles.title}>Masukkan Kode OTP</h3>
+          <h3 className={styles.title}>{t.step2Title}</h3>
           <p className={styles.desc}>
-            Kode verifikasi telah dikirimkan ke nomor{' '}
-            <strong className={styles.phoneHighlight}>+62 {phone}</strong>
+            {typeof t.step2Desc === 'function' ? t.step2Desc(phone) : t.step2Desc}
           </p>
 
           <div className={styles.digitContainer}>
@@ -276,12 +319,12 @@ export const OTPFlow: React.FC<OTPFlowProps> = ({
           </div>
 
           <button type="submit" className={styles.ctaBtn} disabled={isLoading}>
-            {isLoading ? <Spinner className={styles.spinnerIcon} /> : 'Verifikasi & Lanjutkan'}
+            {isLoading ? <Spinner className={styles.spinnerIcon} /> : t.step2Cta}
           </button>
 
           <div className={styles.resendRow}>
             {timer > 0 ? (
-              <span className={styles.timerText}>Kirim ulang kode dalam {timer} detik</span>
+              <span className={styles.timerText}>{t.step2ResendText(timer)}</span>
             ) : (
               <button
                 type="button"
@@ -289,7 +332,7 @@ export const OTPFlow: React.FC<OTPFlowProps> = ({
                 className={styles.resendLink}
                 disabled={isLoading}
               >
-                Kirim Ulang Kode
+                {t.step2ResendCta}
               </button>
             )}
           </div>
@@ -302,9 +345,9 @@ export const OTPFlow: React.FC<OTPFlowProps> = ({
           <div className={styles.successCheck}>
             <CheckCircle size={64} weight="fill" className={styles.checkIcon} />
           </div>
-          <h3 className={styles.title}>Verifikasi Berhasil</h3>
+          <h3 className={styles.title}>{t.step3Title}</h3>
           <p className={styles.desc}>
-            Akun Anda telah berhasil diverifikasi. Mengalihkan Anda secara otomatis...
+            {t.step3Desc}
           </p>
         </div>
       )}
@@ -316,7 +359,7 @@ export const OTPFlow: React.FC<OTPFlowProps> = ({
           className={styles.cancelBtn}
           disabled={isLoading}
         >
-          Batalkan
+          {t.cancel}
         </button>
       )}
     </div>

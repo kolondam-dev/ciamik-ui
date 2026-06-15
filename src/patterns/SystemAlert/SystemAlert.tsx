@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, Warning, XCircle, Info, X } from '@phosphor-icons/react';
 import { cn } from '../../utils';
+import { useCiamik } from '../../provider';
 import styles from './SystemAlert.module.css';
 
 export interface SystemAlertProps {
@@ -12,6 +13,9 @@ export interface SystemAlertProps {
   children?: React.ReactNode;
   sidebarOffset?: boolean; // if sidebar is expanded, shifts position
   autoDismissMs?: number;
+  translations?: {
+    close?: string;
+  };
 }
 
 const DEFAULT_ICONS = {
@@ -29,7 +33,13 @@ export const SystemAlert: React.FC<SystemAlertProps> = ({
   children,
   sidebarOffset = false,
   autoDismissMs,
+  translations,
 }) => {
+  const { labels } = useCiamik();
+  const t = {
+    close: translations?.close || labels?.systemAlert?.close || 'Tutup',
+  };
+
   // Auto-dismiss handler
   useEffect(() => {
     if (isOpen && autoDismissMs) {
@@ -67,7 +77,7 @@ export const SystemAlert: React.FC<SystemAlertProps> = ({
               type="button"
               className={styles.closeBtn}
               onClick={onClose}
-              aria-label="Tutup"
+              aria-label={t.close}
               data-testid="alert-close-btn"
             >
               <X size={16} weight="bold" />

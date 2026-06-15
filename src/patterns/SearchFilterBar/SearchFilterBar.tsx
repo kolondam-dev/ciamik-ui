@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Input } from '../../primitives/Input';
 import { MagnifyingGlass, X } from '@phosphor-icons/react';
 import { cn } from '../../utils';
+import { useCiamik } from '../../provider';
 import styles from './SearchFilterBar.module.css';
 
 export interface FilterOption {
@@ -18,6 +19,10 @@ export interface SearchFilterBarProps {
   onFilterKeyChange?: (key: string) => void;
   className?: string;
   debounceMs?: number;
+  translations?: {
+    searchPlaceholder?: string;
+    clearSearchAria?: string;
+  };
 }
 
 export const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
@@ -29,7 +34,14 @@ export const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
   onFilterKeyChange,
   className,
   debounceMs = 300,
+  translations,
 }) => {
+  const { labels } = useCiamik();
+  const t = {
+    searchPlaceholder: translations?.searchPlaceholder || labels?.searchFilterBar?.searchPlaceholder || 'Cari...',
+    clearSearchAria: translations?.clearSearchAria || labels?.searchFilterBar?.clearSearchAria || 'Bersihkan pencarian',
+  };
+
   const [localSearch, setLocalSearch] = useState(searchValue);
 
   // Sync state if prop changes from outside
@@ -59,7 +71,7 @@ export const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
         <Input
           value={localSearch}
           onChange={(e) => setLocalSearch(e.target.value)}
-          placeholder={placeholder}
+          placeholder={placeholder !== 'Cari...' ? placeholder : t.searchPlaceholder}
           prefixNode={<MagnifyingGlass size={18} />}
           suffixNode={
             localSearch && (
@@ -67,7 +79,7 @@ export const SearchFilterBar: React.FC<SearchFilterBarProps> = ({
                 type="button"
                 className={styles.clearBtn}
                 onClick={handleClear}
-                aria-label="Bersihkan pencarian"
+                aria-label={t.clearSearchAria}
                 data-testid="search-clear-btn"
               >
                 <X size={14} weight="bold" />

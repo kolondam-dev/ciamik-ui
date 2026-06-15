@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '../../primitives/Button';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import { cn } from '../../utils';
+import { useCiamik } from '../../provider';
 import styles from './Pagination.module.css';
 
 export interface PaginationProps {
@@ -13,6 +14,12 @@ export interface PaginationProps {
   isLoading?: boolean;
   hasMore?: boolean;
   className?: string;
+  translations?: {
+    prev?: string;
+    next?: string;
+    loadMore?: string;
+    pageAria?: (page: number | string) => string;
+  };
 }
 
 export const Pagination: React.FC<PaginationProps> = ({
@@ -24,7 +31,16 @@ export const Pagination: React.FC<PaginationProps> = ({
   isLoading = false,
   hasMore = false,
   className,
+  translations,
 }) => {
+  const { labels } = useCiamik();
+  const t = {
+    prev: translations?.prev || labels?.pagination?.prev || 'Prev',
+    next: translations?.next || labels?.pagination?.next || 'Next',
+    loadMore: translations?.loadMore || labels?.pagination?.loadMore || 'Muat Lebih Banyak',
+    pageAria: translations?.pageAria || labels?.pagination?.pageAria || ((p) => `Halaman ${p}`),
+  };
+
   if (strategy === 'load-more') {
     if (!hasMore) return null;
     return (
@@ -36,7 +52,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           onClick={onLoadMore}
           className={styles.loadMoreBtn}
         >
-          Muat Lebih Banyak
+          {t.loadMore}
         </Button>
       </div>
     );
@@ -75,9 +91,9 @@ export const Pagination: React.FC<PaginationProps> = ({
         disabled={currentPage === 1}
         onClick={() => onPageChange && onPageChange(currentPage - 1)}
         leftIcon={<CaretLeft size={14} weight="bold" />}
-        aria-label="Halaman sebelumnya"
+        aria-label={t.pageAria('sebelumnya')}
       >
-        Prev
+        {t.prev}
       </Button>
 
       {/* Pages */}
@@ -101,7 +117,7 @@ export const Pagination: React.FC<PaginationProps> = ({
               onClick={() => handlePageClick(p)}
               className={cn(styles.pageBtn, isCurrent && styles.activePageBtn)}
               aria-current={isCurrent ? 'page' : undefined}
-              aria-label={`Halaman ${p}`}
+              aria-label={t.pageAria(p)}
             >
               {p}
             </button>
@@ -116,9 +132,9 @@ export const Pagination: React.FC<PaginationProps> = ({
         disabled={currentPage === totalPages}
         onClick={() => onPageChange && onPageChange(currentPage + 1)}
         rightIcon={<CaretRight size={14} weight="bold" />}
-        aria-label="Halaman berikutnya"
+        aria-label={t.pageAria('berikutnya')}
       >
-        Next
+        {t.next}
       </Button>
     </div>
   );

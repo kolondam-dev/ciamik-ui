@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useMemo } from 'react';
-import type { BrandTokens, CiamikProviderProps } from './types';
+import React, { createContext, useContext, useMemo, useEffect } from 'react';
+import type { BrandTokens, CiamikProviderProps, GlobalLabels } from './types';
 import { ToastProvider } from '../primitives/Toast';
 
 /** Map from BrandTokens property names to CSS custom property names */
@@ -24,6 +24,7 @@ const TOKEN_MAP: Record<keyof BrandTokens, string> = {
 interface CiamikContextValue {
   darkMode: boolean;
   brand?: BrandTokens;
+  labels?: GlobalLabels;
 }
 
 const CiamikContext = createContext<CiamikContextValue>({
@@ -47,6 +48,7 @@ const CiamikContext = createContext<CiamikContextValue>({
  */
 export function CiamikProvider({
   brand,
+  labels,
   darkMode = false,
   children,
   className,
@@ -66,14 +68,19 @@ export function CiamikProvider({
   }, [brand]);
 
   const contextValue = useMemo(
-    () => ({ darkMode, brand }),
-    [darkMode, brand]
+    () => ({ darkMode, brand, labels }),
+    [darkMode, brand, labels]
   );
 
-  const wrapperClass = [
-    darkMode ? 'dark' : '',
-    className ?? '',
-  ].filter(Boolean).join(' ') || undefined;
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+  }, [darkMode]);
+
+  const wrapperClass = className ?? undefined;
 
   return (
     <CiamikContext.Provider value={contextValue}>

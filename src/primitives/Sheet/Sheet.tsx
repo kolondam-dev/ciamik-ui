@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useDragControls, useMotionValue, useTransform } from 'framer-motion';
 import { X } from '@phosphor-icons/react';
+import { useCiamik } from '../../provider';
 import styles from './Sheet.module.css';
 
 // closed state = dismiss (translateY 100%)
@@ -16,6 +17,9 @@ export interface SheetProps {
   isDismissible?: boolean;
   /** Initial snap point when opened. Defaults to 'half'. */
   initialSnap?: 'half' | 'full';
+  translations?: {
+    close?: string;
+  };
 }
 
 export const Sheet: React.FC<SheetProps> = ({
@@ -25,7 +29,13 @@ export const Sheet: React.FC<SheetProps> = ({
   children,
   isDismissible = true,
   initialSnap = 'half',
+  translations,
 }) => {
+  const { labels } = useCiamik();
+  const t = {
+    close: translations?.close || labels?.sheet?.close || 'Tutup',
+  };
+
   const sheetRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
   const dragControls = useDragControls();
@@ -197,7 +207,7 @@ export const Sheet: React.FC<SheetProps> = ({
               <div className={styles.header}>
                 <h3 className={styles.title}>{title}</h3>
                 {isDismissible && (
-                  <button type="button" className={styles.closeBtn} onClick={onClose} aria-label="Tutup">
+                  <button type="button" className={styles.closeBtn} onClick={onClose} aria-label={t.close}>
                     <X size={18} weight="bold" />
                   </button>
                 )}

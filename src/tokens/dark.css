@@ -1,9 +1,9 @@
 /* ====================================================================
    CIAMIK Design System — Dark Mode Overrides
-   Activated via .dark class on ancestor element.
+   Activated via [data-theme="dark"] attribute on ancestor element.
    ==================================================================== */
 
-.dark {
+[data-theme="dark"] {
   --ciamik-surface:        var(--ciamik-navy-800);
   --ciamik-bg:             var(--ciamik-navy-900);
   --ciamik-ink:            var(--ciamik-navy-50);

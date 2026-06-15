@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 import { cn } from '../../utils';
 import { Package, MagnifyingGlass, Lock, WifiSlash } from '@phosphor-icons/react';
 import { Button } from '../Button';
+import { useCiamik } from '../../provider';
 import styles from './EmptyState.module.css';
 
 export interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -48,9 +49,25 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(
     },
     ref
   ) => {
+    const { labels } = useCiamik();
+    
+    // Resolve Title
+    let defaultTitle = DEFAULT_TITLES[variant];
+    if (variant === 'no-data' && labels?.emptyState?.noDataTitle) defaultTitle = labels.emptyState.noDataTitle;
+    if (variant === 'no-results' && labels?.emptyState?.noResultsTitle) defaultTitle = labels.emptyState.noResultsTitle;
+    if (variant === 'no-permission' && labels?.emptyState?.noPermissionTitle) defaultTitle = labels.emptyState.noPermissionTitle;
+    if (variant === 'no-connection' && labels?.emptyState?.noConnectionTitle) defaultTitle = labels.emptyState.noConnectionTitle;
+    const finalTitle = title || defaultTitle;
+
+    // Resolve Description
+    let defaultDesc = DEFAULT_DESCRIPTIONS[variant];
+    if (variant === 'no-data' && labels?.emptyState?.noDataDesc) defaultDesc = labels.emptyState.noDataDesc;
+    if (variant === 'no-results' && labels?.emptyState?.noResultsDesc) defaultDesc = labels.emptyState.noResultsDesc;
+    if (variant === 'no-permission' && labels?.emptyState?.noPermissionDesc) defaultDesc = labels.emptyState.noPermissionDesc;
+    if (variant === 'no-connection' && labels?.emptyState?.noConnectionDesc) defaultDesc = labels.emptyState.noConnectionDesc;
+    const finalDescription = description || defaultDesc;
+
     const finalIcon = icon || DEFAULT_ICONS[variant];
-    const finalTitle = title || DEFAULT_TITLES[variant];
-    const finalDescription = description || DEFAULT_DESCRIPTIONS[variant];
 
     return (
       <div ref={ref} className={cn(styles.container, className)} {...props}>
