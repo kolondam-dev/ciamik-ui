@@ -1,6 +1,6 @@
-# @ciamik/ui — Consumer Use-Case Reference Guide
+# @kolondam-dev/ciamik-ui — Consumer Use-Case Reference Guide
 
-Panduan praktis bagi developer untuk mengintegrasikan dan menggunakan `@ciamik/ui` dalam membangun aplikasi storefront maupun backoffice.
+Panduan praktis bagi developer untuk mengintegrasikan dan menggunakan `@kolondam-dev/ciamik-ui` dalam membangun aplikasi storefront maupun backoffice.
 
 ---
 
@@ -11,14 +11,14 @@ Karena pustaka ini dipublikasikan secara privat melalui **GitHub Packages**, And
 
 1. Buat berkas `.npmrc` di root aplikasi Anda:
 ```ini
-@ciamik:registry=https://npm.pkg.github.com
+@kolondam-dev:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
 ```
 2. Pastikan variabel lingkungan `GITHUB_TOKEN` terisi dengan Personal Access Token (PAT) GitHub yang memiliki akses `read:packages`.
-3. Install library `@ciamik/ui` beserta peer dependencies yang dibutuhkan:
+3. Install library `@kolondam-dev/ciamik-ui` beserta peer dependencies yang dibutuhkan:
 
 ```bash
-npm install @ciamik/ui react react-dom framer-motion @phosphor-icons/react
+npm install @kolondam-dev/ciamik-ui react react-dom framer-motion @phosphor-icons/react
 ```
 
 ### Registrasi CSS Tokens
@@ -30,7 +30,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 
 // Import CSS tokens & styles ciamik
-import '@ciamik/ui/dist/style.css';
+import '@kolondam-dev/ciamik-ui/dist/style.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -48,7 +48,7 @@ Wrap aplikasi Anda dengan `CiamikProvider` untuk mengaktifkan state management g
 ### Contoh Toggle Mode Gelap Dinamis
 ```tsx
 import { useState } from 'react';
-import { CiamikProvider, Button } from '@ciamik/ui';
+import { CiamikProvider, Button } from '@kolondam-dev/ciamik-ui';
 
 export default function Root() {
   const [darkMode, setDarkMode] = useState(false);
@@ -72,7 +72,7 @@ export default function Root() {
 Jika Anda memiliki sistem multi-tenant di mana setiap toko (merchant) memiliki warna tema unik:
 
 ```tsx
-import { CiamikProvider, Card, Button } from '@ciamik/ui';
+import { CiamikProvider, Card, Button } from '@kolondam-dev/ciamik-ui';
 
 function MerchantStorefront() {
   // Misalnya data warna ini diambil dari API toko merchant
@@ -102,7 +102,7 @@ Halaman katalog storefront responsif yang menampilkan grid produk, stepper kuant
 
 ```tsx
 import { useState } from 'react';
-import { ProductGrid, ProductCard, useToast, CiamikProvider } from '@ciamik/ui';
+import { ProductGrid, ProductCard, useToast, CiamikProvider } from '@kolondam-dev/ciamik-ui';
 
 const SAMPLE_PRODUCTS = [
   { id: 1, image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80', name: 'Running Shoes X-1', category: 'Fashion', price: 450000, rating: 4.8, soldCount: 320, stock: 5 },
@@ -167,7 +167,7 @@ Orkestrasi pembayaran storefront dengan checkout summary dan OTP verification mo
 
 ```tsx
 import { useState } from 'react';
-import { OTPFlow, TrustBadges, useToast, Button } from '@ciamik/ui';
+import { OTPFlow, TrustBadges, useToast, Button } from '@kolondam-dev/ciamik-ui';
 
 export function CheckoutContainer() {
   const { toast } = useToast();
@@ -224,7 +224,7 @@ Penggunaan layout split, data table interaktif dengan bulk action, dan detail pa
 
 ```tsx
 import { useState } from 'react';
-import { Sidebar, DataTable, DetailPane, StatusBadge, Select, Button } from '@ciamik/ui';
+import { Sidebar, DataTable, DetailPane, StatusBadge, Select, Button } from '@kolondam-dev/ciamik-ui';
 import { House, ShoppingCart, Truck, Tag } from '@phosphor-icons/react';
 
 const sidebarMenu = [
@@ -313,7 +313,7 @@ Mengelola pipeline pengiriman dengan Kanban Board dan me-reject perpindahan kart
 
 ```tsx
 import { useState } from 'react';
-import { KanbanBoard, useToast, Card } from '@ciamik/ui';
+import { KanbanBoard, useToast, Card } from '@kolondam-dev/ciamik-ui';
 
 interface Column {
   id: string;
@@ -398,7 +398,7 @@ Component `StorefrontDrawer` secara dinamis berubah fungsi menjadi Bottom Sheet 
 
 ```tsx
 import { useState } from 'react';
-import { useMediaQuery, Sheet, Button } from '@ciamik/ui';
+import { useMediaQuery, Sheet, Button } from '@kolondam-dev/ciamik-ui';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X } from '@phosphor-icons/react';
 
@@ -486,7 +486,7 @@ Berikut adalah cara menyusun state dan logika untuk region selector berjenjang y
 
 ```tsx
 import { useState } from 'react';
-import { useToast, Button, Input } from '@ciamik/ui';
+import { useToast, Button, Input } from '@kolondam-dev/ciamik-ui';
 import { CaretRight, MagnifyingGlass } from '@phosphor-icons/react';
 
 // Database Mock Wilayah
